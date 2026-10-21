@@ -1,7 +1,5 @@
 # HW2 — Ansible и PostgreSQL
 
-[Репозиторий](https://github.com/Summit67/DevOps-2) · [Роль](https://github.com/Summit67/DevOps-2/tree/main/roles/postgres) · [Плейбук](https://github.com/Summit67/DevOps-2/blob/main/postgres.play.yml)
-
 ## Коллекция
 
 Команда (Bash):
