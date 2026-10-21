@@ -1,0 +1,71 @@
+---
+- name: Download exporter on the controller
+  delegate_to: localhost
+  become: false
+  run_once: true
+  block:
+    - name: Create the download directory
+      ansible.builtin.file:
+        path: "{{ __exporter_cache }}"
+        state: directory
+        mode: "0755"
+
+    - name: Download the exporter archive
+      ansible.builtin.get_url:
+        url: "{{ __exporter_release_url }}/{{ __exporter_name }}.tar.gz"
+        dest: "{{ __exporter_cache }}/{{ __exporter_name }}.tar.gz"
+        checksum: "sha256:{{ __exporter_release_url }}/sha256sums.txt"
+        mode: "0644"
+
+    - name: Unpack the exporter
+      ansible.builtin.unarchive:
+        src: "{{ __exporter_cache }}/{{ __exporter_name }}.tar.gz"
+        dest: "{{ __exporter_cache }}"
+        remote_src: true
+        creates: "{{ __exporter_cache }}/{{ __exporter_name }}/postgres_exporter"
+
+- name: Create a system user for the exporter
+  ansible.builtin.user:
+    name: "{{ __exporter_user }}"
+    system: true
+    create_home: false
+    shell: /usr/sbin/nologin
+
+- name: Copy the exporter binary to vm1
+  ansible.builtin.copy:
+    src: "{{ __exporter_cache }}/{{ __exporter_name }}/postgres_exporter"
+    dest: "{{ __exporter_binary }}"
+    owner: root
+    group: root
+    mode: "0755"
+  notify: Restart postgres-exporter
+
+- name: Configure exporter connection
+  ansible.builtin.template:
+    src: exporter.env.j2
+    dest: "{{ __exporter_env }}"
+    owner: root
+    group: root
+    mode: "0600"
+  no_log: true
+  notify: Restart postgres-exporter
+
+- name: Install the exporter service
+  ansible.builtin.template:
+    src: postgres-exporter.service.j2
+    dest: "/etc/systemd/system/{{ postgres__exporter_service_name }}.service"
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reload systemd
+    - Restart postgres-exporter
+
+- name: Apply the exporter service configuration
+  ansible.builtin.meta: flush_handlers
+
+- name: Enable and start postgres-exporter
+  ansible.builtin.systemd_service:
+    name: "{{ postgres__exporter_service_name }}"
+    enabled: true
+    state: started

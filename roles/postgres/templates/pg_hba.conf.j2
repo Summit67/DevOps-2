@@ -1,0 +1,4 @@
+{{ ansible_managed | comment }}
+{% for rule in postgres__hba %}
+{{ rule.type }} {{ rule.database }} {{ rule.user }}{% if rule.type != 'local' %} {{ rule.address }}{% endif %} {{ rule.method }}
+{% endfor %}

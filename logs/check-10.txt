@@ -1,0 +1,4 @@
+vm1 | CHANGED | rc=0 >>
+755:root:root:/data
+700:postgres:postgres:/data/postgres
+700:postgres:postgres:/data/postgres/data

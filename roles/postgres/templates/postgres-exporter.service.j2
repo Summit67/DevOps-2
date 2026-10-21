@@ -1,0 +1,16 @@
+{{ ansible_managed | comment }}
+[Unit]
+Description=PostgreSQL Prometheus exporter
+Wants={{ postgres__service_name }}.service
+After={{ postgres__service_name }}.service network.target
+
+[Service]
+Type=simple
+User={{ __exporter_user }}
+EnvironmentFile={{ __exporter_env }}
+ExecStart={{ __exporter_binary }} --web.listen-address={{ postgres__exporter_listen }}
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

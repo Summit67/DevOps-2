@@ -1,0 +1,10 @@
+---
+__pg_bin_dir: "/usr/lib/postgresql/{{ postgres__version }}/bin"
+__ubuntu_cluster_service: "postgresql@{{ postgres__version }}-main"
+__ubuntu_cluster_start_conf: "/etc/postgresql/{{ postgres__version }}/main/start.conf"
+__exporter_user: postgres-exporter
+__exporter_binary: /usr/local/bin/postgres-exporter
+__exporter_env: /etc/default/postgres-exporter
+__exporter_name: "postgres_exporter-{{ postgres__exporter_version }}.linux-{{ postgres__exporter_arch }}"
+__exporter_cache: "{{ playbook_dir }}/.cache/postgres-exporter"
+__exporter_release_url: "https://github.com/prometheus-community/postgres_exporter/releases/download/v{{ postgres__exporter_version }}"

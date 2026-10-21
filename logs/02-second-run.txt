@@ -1,0 +1,107 @@
+
+PLAY [Install PostgreSQL on vm1] ***********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [vm1]
+
+TASK [postgres : Check role parameters] ****************************************
+ok: [vm1]
+
+TASK [postgres : Install packages from Ubuntu repositories] ********************
+ok: [vm1]
+
+TASK [postgres : Disable the default Ubuntu cluster] ***************************
+ok: [vm1]
+
+TASK [postgres : Check the Ubuntu cluster startup file] ************************
+ok: [vm1]
+
+TASK [postgres : Prevent the default cluster from starting automatically] ******
+ok: [vm1]
+
+TASK [postgres : Create /data] *************************************************
+ok: [vm1]
+
+TASK [postgres : Create PostgreSQL data directories] ***************************
+ok: [vm1] => (item=/data/postgres)
+ok: [vm1] => (item=/data/postgres/data)
+
+TASK [postgres : Initialize the database cluster] ******************************
+ok: [vm1]
+
+TASK [postgres : Set PostgreSQL options without replacing other defaults] ******
+ok: [vm1] => (item=listen_addresses)
+ok: [vm1] => (item=port)
+ok: [vm1] => (item=unix_socket_directories)
+ok: [vm1] => (item=password_encryption)
+ok: [vm1] => (item=max_connections)
+ok: [vm1] => (item=shared_buffers)
+
+TASK [postgres : Configure client authentication] ******************************
+ok: [vm1]
+
+TASK [postgres : Install the PostgreSQL service] *******************************
+ok: [vm1]
+
+TASK [postgres : Apply configuration before checking PostgreSQL] ***************
+
+TASK [postgres : Enable and start PostgreSQL] **********************************
+ok: [vm1]
+
+TASK [postgres : Check PostgreSQL readiness] ***********************************
+ok: [vm1]
+
+TASK [postgres : Run SELECT 1] *************************************************
+ok: [vm1]
+
+TASK [postgres : Show SELECT 1 result] *****************************************
+ok: [vm1] => {
+    "__select_result.query_result": [
+        {
+            "result": 1
+        }
+    ]
+}
+
+TASK [postgres : Create database users] ****************************************
+ok: [vm1] => (item=(censored due to no_log))
+
+TASK [postgres : Create user databases] ****************************************
+ok: [vm1] => (item={'name': 'app_db', 'owner': 'app_user', 'encoding': 'UTF8'})
+ok: [vm1] => (item={'name': 'test_db', 'owner': 'app_user', 'encoding': 'UTF8'})
+
+TASK [postgres : Create the exporter database user] ****************************
+ok: [vm1]
+
+TASK [postgres : Give pg_monitor to the exporter] ******************************
+ok: [vm1]
+
+TASK [postgres : Create the download directory] ********************************
+ok: [vm1 -> localhost]
+
+TASK [postgres : Download the exporter archive] ********************************
+ok: [vm1 -> localhost]
+
+TASK [postgres : Unpack the exporter] ******************************************
+skipping: [vm1]
+
+TASK [postgres : Create a system user for the exporter] ************************
+ok: [vm1]
+
+TASK [postgres : Copy the exporter binary to vm1] ******************************
+ok: [vm1]
+
+TASK [postgres : Configure exporter connection] ********************************
+ok: [vm1]
+
+TASK [postgres : Install the exporter service] *********************************
+ok: [vm1]
+
+TASK [postgres : Apply the exporter service configuration] *********************
+
+TASK [postgres : Enable and start postgres-exporter] ***************************
+ok: [vm1]
+
+PLAY RECAP *********************************************************************
+vm1                        : ok=27   changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+

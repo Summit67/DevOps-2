@@ -1,0 +1,49 @@
+---
+- name: Create database users
+  community.postgresql.postgresql_user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    role_attr_flags: "{{ item.role_attr_flags | default('LOGIN,NOSUPERUSER') }}"
+    state: present
+    login_db: postgres
+    login_unix_socket: "{{ postgres__login_socket }}"
+    login_port: "{{ postgres__login_port }}"
+  become_user: postgres
+  environment:
+    PGOPTIONS: "-c password_encryption=scram-sha-256"
+  loop: "{{ postgres__users }}"
+  no_log: true
+
+- name: Create user databases
+  community.postgresql.postgresql_db:
+    name: "{{ item.name }}"
+    owner: "{{ item.owner | default(omit) }}"
+    encoding: "{{ item.encoding | default(omit) }}"
+    state: present
+    login_unix_socket: "{{ postgres__login_socket }}"
+    login_port: "{{ postgres__login_port }}"
+  become_user: postgres
+  loop: "{{ postgres__databases }}"
+
+- name: Create the exporter database user
+  community.postgresql.postgresql_user:
+    name: "{{ postgres__exporter_db_user }}"
+    password: "{{ postgres__exporter_password }}"
+    role_attr_flags: LOGIN,NOSUPERUSER,NOCREATEDB,NOCREATEROLE
+    login_db: postgres
+    login_unix_socket: "{{ postgres__login_socket }}"
+    login_port: "{{ postgres__login_port }}"
+  become_user: postgres
+  environment:
+    PGOPTIONS: "-c password_encryption=scram-sha-256"
+  no_log: true
+
+- name: Give pg_monitor to the exporter
+  community.postgresql.postgresql_membership:
+    groups: pg_monitor
+    target_roles: "{{ postgres__exporter_db_user }}"
+    state: present
+    login_db: postgres
+    login_unix_socket: "{{ postgres__login_socket }}"
+    login_port: "{{ postgres__login_port }}"
+  become_user: postgres

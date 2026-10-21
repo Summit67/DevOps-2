@@ -1,0 +1,22 @@
+---
+- name: Check role parameters
+  ansible.builtin.assert:
+    that:
+      - postgres__data_dir.startswith('/data/postgres/')
+      - postgres__opts is mapping
+      - postgres__hba is sequence
+      - postgres__exporter_password | length > 0
+    fail_msg: Check the data directory, configuration and exporter password in vault.
+  no_log: true
+
+- name: Install PostgreSQL
+  ansible.builtin.import_tasks: install.yml
+
+- name: Configure PostgreSQL
+  ansible.builtin.import_tasks: configure.yml
+
+- name: Create users and databases
+  ansible.builtin.import_tasks: databases.yml
+
+- name: Install postgres-exporter
+  ansible.builtin.import_tasks: exporter.yml

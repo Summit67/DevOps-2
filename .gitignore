@@ -1,0 +1,4 @@
+vault-pass
+.cache/
+__pycache__/
+*.retry

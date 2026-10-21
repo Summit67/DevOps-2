@@ -1,0 +1,47 @@
+---
+postgres__version: "18"
+postgres__data_dir: /data/postgres/data
+postgres__service_name: postgres-hw2
+
+# String values include SQL quotes, numeric values do not.
+postgres__opts:
+  listen_addresses: "'127.0.0.1'"
+  port: 5432
+  unix_socket_directories: "'/var/run/postgresql'"
+  password_encryption: "'scram-sha-256'"
+  max_connections: 100
+  shared_buffers: "'128MB'"
+
+postgres__hba:
+  - type: local
+    database: all
+    user: postgres
+    method: peer
+  - type: local
+    database: all
+    user: all
+    method: scram-sha-256
+  - type: host
+    database: all
+    user: all
+    address: 127.0.0.1/32
+    method: scram-sha-256
+  - type: host
+    database: all
+    user: all
+    address: ::1/128
+    method: scram-sha-256
+
+postgres__login_socket: /var/run/postgresql
+postgres__login_port: "{{ postgres__opts.port | default(5432) }}"
+postgres__users: []
+postgres__databases: []
+
+postgres__exporter_version: "0.18.1"
+postgres__exporter_arch: amd64
+postgres__exporter_listen: "127.0.0.1:9187"
+postgres__exporter_service_name: postgres-exporter
+postgres__exporter_db_user: postgres_exporter
+postgres__exporter_password: ""
+postgres__exporter_db_host: 127.0.0.1
+postgres__exporter_database: postgres

@@ -1,0 +1,5 @@
+vm1 | CHANGED | rc=0 >>
+   data_directory    
+---------------------
+ /data/postgres/data
+(1 row)

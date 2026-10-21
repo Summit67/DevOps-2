@@ -1,0 +1,63 @@
+---
+- name: Set PostgreSQL options without replacing other defaults
+  ansible.builtin.lineinfile:
+    path: "{{ postgres__data_dir }}/postgresql.conf"
+    regexp: '^#?{{ item.key | regex_escape() }}\s*='
+    line: "{{ item.key }} = {{ item.value }}"
+  loop: "{{ postgres__opts | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+  notify: Restart PostgreSQL
+
+- name: Configure client authentication
+  ansible.builtin.template:
+    src: pg_hba.conf.j2
+    dest: "{{ postgres__data_dir }}/pg_hba.conf"
+    owner: postgres
+    group: postgres
+    mode: "0600"
+  notify: Restart PostgreSQL
+
+- name: Install the PostgreSQL service
+  ansible.builtin.template:
+    src: postgresql.service.j2
+    dest: "/etc/systemd/system/{{ postgres__service_name }}.service"
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reload systemd
+    - Restart PostgreSQL
+
+- name: Apply configuration before checking PostgreSQL
+  ansible.builtin.meta: flush_handlers
+
+- name: Enable and start PostgreSQL
+  ansible.builtin.systemd_service:
+    name: "{{ postgres__service_name }}"
+    enabled: true
+    state: started
+
+- name: Check PostgreSQL readiness
+  ansible.builtin.command:
+    cmd: "{{ __pg_bin_dir }}/pg_isready -h {{ postgres__login_socket }} -p {{ postgres__login_port }}"
+  become_user: postgres
+  changed_when: false
+  register: __pg_ready
+  retries: 10
+  delay: 2
+  until: __pg_ready.rc == 0
+
+- name: Run SELECT 1
+  community.postgresql.postgresql_query:
+    login_db: postgres
+    login_unix_socket: "{{ postgres__login_socket }}"
+    login_port: "{{ postgres__login_port }}"
+    query: SELECT 1 AS result
+  become_user: postgres
+  changed_when: false
+  register: __select_result
+
+- name: Show SELECT 1 result
+  ansible.builtin.debug:
+    var: __select_result.query_result

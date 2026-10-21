@@ -1,0 +1,15 @@
+---
+postgres__users:
+  - name: app_user
+    password: "{{ vault_app_password }}"
+    role_attr_flags: LOGIN,NOSUPERUSER,NOCREATEDB,NOCREATEROLE
+
+postgres__databases:
+  - name: app_db
+    owner: app_user
+    encoding: UTF8
+  - name: test_db
+    owner: app_user
+    encoding: UTF8
+
+postgres__exporter_password: "{{ vault_exporter_password }}"
