@@ -1,0 +1,11 @@
+Dashboard: HW3 — Мониторинг ВМ
+Variables: instance
+CPU | percent
+100 * (1 - avg by (instance) (rate(node_cpu_seconds_total{instance=~"$instance",mode="idle"}[$__rate_interval])))
+RAM | percent
+100 * (1 - node_memory_MemAvailable_bytes{instance=~"$instance"} / node_memory_MemTotal_bytes{instance=~"$instance"})
+Диск: свободное место | bytes
+node_filesystem_avail_bytes{instance=~"$instance",fstype!~"tmpfs|overlay|squashfs",mountpoint!~"/run.*|/var/lib/docker.*"}
+Сеть | Bps
+rate(node_network_receive_bytes_total{instance=~"$instance",device!~"lo|veth.*|docker.*|br-.*"}[$__rate_interval])
+rate(node_network_transmit_bytes_total{instance=~"$instance",device!~"lo|veth.*|docker.*|br-.*"}[$__rate_interval])

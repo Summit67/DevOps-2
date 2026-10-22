@@ -1,0 +1,4 @@
+REPOSITORY:TAG               SIZE
+counter-backend:nonroot      234MB
+counter-backend:multistage   234MB
+counter-backend:single       373MB

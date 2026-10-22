@@ -1,0 +1,59 @@
+{
+    "status": "success",
+    "data": {
+        "activeTargets": [
+            {
+                "discoveredLabels": {
+                    "__address__": "host.docker.internal:9100",
+                    "__metrics_path__": "/metrics",
+                    "__scheme__": "http",
+                    "__scrape_interval__": "15s",
+                    "__scrape_timeout__": "10s",
+                    "instance": "vm1",
+                    "job": "node"
+                },
+                "labels": {
+                    "instance": "vm1",
+                    "job": "node"
+                },
+                "scrapePool": "node",
+                "scrapeUrl": "http://host.docker.internal:9100/metrics",
+                "globalUrl": "http://host.docker.internal:9100/metrics",
+                "lastError": "",
+                "lastScrape": "2026-10-22T16:23:49.627409329Z",
+                "lastScrapeDuration": 0.016935195,
+                "health": "up",
+                "scrapeInterval": "15s",
+                "scrapeTimeout": "10s"
+            },
+            {
+                "discoveredLabels": {
+                    "__address__": "localhost:9090",
+                    "__metrics_path__": "/metrics",
+                    "__scheme__": "http",
+                    "__scrape_interval__": "15s",
+                    "__scrape_timeout__": "10s",
+                    "job": "prometheus"
+                },
+                "labels": {
+                    "instance": "localhost:9090",
+                    "job": "prometheus"
+                },
+                "scrapePool": "prometheus",
+                "scrapeUrl": "http://localhost:9090/metrics",
+                "globalUrl": "http://fc6b7d72b8f0:9090/metrics",
+                "lastError": "",
+                "lastScrape": "2026-10-22T16:23:47.293042063Z",
+                "lastScrapeDuration": 0.006896209,
+                "health": "up",
+                "scrapeInterval": "15s",
+                "scrapeTimeout": "10s"
+            }
+        ],
+        "droppedTargets": [],
+        "droppedTargetCounts": {
+            "node": 0,
+            "prometheus": 0
+        }
+    }
+}

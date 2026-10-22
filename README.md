@@ -49,3 +49,7 @@ curl -s http://127.0.0.1:9187/metrics | grep '^pg_up '
 ```
 
 Первый прогон: changed=23, failed=0. Второй: changed=0, failed=0. Полный вывод обоих запусков и проверок - в отчёте.
+
+## HW3
+
+[Мониторинг ВМ и Docker-образы counter-backend](HW3/README.md)

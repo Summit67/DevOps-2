@@ -1,0 +1,10 @@
+ Container hw3-monitoring-node-exporter-1  Running
+ Container hw3-monitoring-grafana-1  Recreate
+ Container hw3-monitoring-prometheus-1  Running
+ Container hw3-monitoring-grafana-1  Recreated
+ Container hw3-monitoring-grafana-1  Starting
+ Container hw3-monitoring-grafana-1  Started
+NAME                             IMAGE                       COMMAND                  SERVICE         CREATED         STATUS                  PORTS
+hw3-monitoring-grafana-1         grafana/grafana:12.1.0      "/run.sh"                grafana         1 second ago    Up Less than a second   127.0.0.1:3000->3000/tcp
+hw3-monitoring-node-exporter-1   prom/node-exporter:v1.9.1   "/bin/node_exporter …"   node-exporter   3 minutes ago   Up 3 minutes            
+hw3-monitoring-prometheus-1      prom/prometheus:v3.5.0      "/bin/prometheus --c…"   prometheus      3 minutes ago   Up 3 minutes            127.0.0.1:9090->9090/tcp

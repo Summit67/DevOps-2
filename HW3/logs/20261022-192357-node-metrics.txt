@@ -1,0 +1,12 @@
+node_cpu_seconds_total{cpu="0",mode="idle"} 559.37
+node_cpu_seconds_total{cpu="0",mode="iowait"} 2.67
+node_cpu_seconds_total{cpu="0",mode="irq"} 0
+node_cpu_seconds_total{cpu="0",mode="nice"} 1.74
+node_cpu_seconds_total{cpu="0",mode="softirq"} 1.61
+node_cpu_seconds_total{cpu="0",mode="steal"} 0
+node_cpu_seconds_total{cpu="0",mode="system"} 26.78
+node_cpu_seconds_total{cpu="0",mode="user"} 37.61
+node_cpu_seconds_total{cpu="1",mode="idle"} 559.47
+node_cpu_seconds_total{cpu="1",mode="iowait"} 2.83
+node_cpu_seconds_total{cpu="1",mode="irq"} 0
+node_cpu_seconds_total{cpu="1",mode="nice"} 1.11

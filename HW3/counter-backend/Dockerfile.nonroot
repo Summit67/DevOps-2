@@ -1,0 +1,36 @@
+FROM python:3.11.6-slim-bookworm AS build
+SHELL ["/bin/sh", "-eu", "-c"]
+RUN python -m pip install \
+    --no-color --no-cache-dir --disable-pip-version-check \
+    --no-python-version-warning --no-warn-script-location \
+    --break-system-packages --progress-bar off \
+    poetry==1.8.5 poetry-plugin-export==1.8.0 setuptools wheel
+WORKDIR /build
+COPY pyproject.toml poetry.lock README.md ./
+RUN mkdir -p dist \
+    && poetry export --without-hashes --format constraints.txt --output dist/constraints.txt \
+    && poetry run python -m pip wheel --isolated \
+        --requirement dist/constraints.txt --wheel-dir dist/vendor
+COPY src/ src/
+RUN poetry build --format wheel
+
+FROM python:3.11.6-slim-bookworm
+SHELL ["/bin/sh", "-eu", "-c"]
+ARG APP_USER=user
+ARG APP_HOME=/app
+ARG APP_UID=1001
+ARG APP_GID=1001
+RUN addgroup --gid "${APP_GID}" "${APP_USER}" \
+    && adduser --disabled-password --gecos "" \
+        --home "${APP_HOME}" --ingroup "${APP_USER}" --uid "${APP_UID}" "${APP_USER}"
+WORKDIR ${APP_HOME}
+COPY --from=build /build/dist/ dist/
+RUN find dist dist/vendor -maxdepth 1 -iname '*.whl' -print0 \
+    | xargs --null python -m pip install \
+        --isolated --no-index --no-color --no-cache-dir \
+        --disable-pip-version-check --no-python-version-warning \
+        --no-warn-script-location --no-deps --break-system-packages --progress-bar off
+USER ${APP_USER}
+ENV PORT=8080
+EXPOSE 8080/tcp
+ENTRYPOINT ["python", "-m", "counter_backend"]

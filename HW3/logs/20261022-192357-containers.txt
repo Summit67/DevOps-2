@@ -1,0 +1,7 @@
+NAMES                            IMAGE                        STATUS         PORTS
+hw3-monitoring-grafana-1         grafana/grafana:12.1.0       Up 1 second    127.0.0.1:3000->3000/tcp
+hw3-nonroot                      counter-backend:nonroot      Up 2 minutes   127.0.0.1:8083->8080/tcp
+hw3-multistage                   counter-backend:multistage   Up 2 minutes   127.0.0.1:8082->8080/tcp
+hw3-single                       counter-backend:single       Up 2 minutes   127.0.0.1:8081->8080/tcp
+hw3-monitoring-prometheus-1      prom/prometheus:v3.5.0       Up 3 minutes   127.0.0.1:9090->9090/tcp
+hw3-monitoring-node-exporter-1   prom/node-exporter:v1.9.1    Up 3 minutes   

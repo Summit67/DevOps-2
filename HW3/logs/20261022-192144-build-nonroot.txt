@@ -1,0 +1,90 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.nonroot
+#1 transferring dockerfile: 1.50kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.11.6-slim-bookworm
+#2 DONE 0.4s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 88B done
+#3 DONE 0.0s
+
+#4 [build 1/7] FROM docker.io/library/python:3.11.6-slim-bookworm@sha256:cc758519481092eb5a4a5ab0c1b303e288880d59afc601958d19e95b300bc86b
+#4 resolve docker.io/library/python:3.11.6-slim-bookworm@sha256:cc758519481092eb5a4a5ab0c1b303e288880d59afc601958d19e95b300bc86b done
+#4 CACHED
+
+#5 [internal] load build context
+#5 transferring context: 306B done
+#5 DONE 0.0s
+
+#6 [build 3/7] WORKDIR /build
+#6 CACHED
+
+#7 [build 5/7] RUN mkdir -p dist     && poetry export --without-hashes --format constraints.txt --output dist/constraints.txt     && poetry run python -m pip wheel --isolated         --requirement dist/constraints.txt --wheel-dir dist/vendor
+#7 CACHED
+
+#8 [build 4/7] COPY pyproject.toml poetry.lock README.md ./
+#8 CACHED
+
+#9 [build 6/7] COPY src/ src/
+#9 CACHED
+
+#10 [build 2/7] RUN python -m pip install     --no-color --no-cache-dir --disable-pip-version-check     --no-python-version-warning --no-warn-script-location     --break-system-packages --progress-bar off     poetry==1.8.5 poetry-plugin-export==1.8.0 setuptools wheel
+#10 CACHED
+
+#11 [build 7/7] RUN poetry build --format wheel
+#11 CACHED
+
+#12 [stage-1 2/5] RUN addgroup --gid "1001" "user"     && adduser --disabled-password --gecos ""         --home "/app" --ingroup "user" --uid "1001" "user"
+#12 0.251 Adding group `user' (GID 1001) ...
+#12 0.285 Done.
+#12 0.328 Adding user `user' ...
+#12 0.328 Adding new user `user' (1001) with group `user (1001)' ...
+#12 0.347 Creating home directory `/app' ...
+#12 0.347 Copying files from `/etc/skel' ...
+#12 0.367 Adding new user `user' to supplemental / extra groups `users' ...
+#12 0.367 Adding user `user' to group `users' ...
+#12 DONE 0.4s
+
+#13 [stage-1 3/5] WORKDIR /app
+#13 DONE 0.0s
+
+#14 [stage-1 4/5] COPY --from=build /build/dist/ dist/
+#14 DONE 0.0s
+
+#15 [stage-1 5/5] RUN find dist dist/vendor -maxdepth 1 -iname '*.whl' -print0     | xargs --null python -m pip install         --isolated --no-index --no-color --no-cache-dir         --disable-pip-version-check --no-python-version-warning         --no-warn-script-location --no-deps --break-system-packages --progress-bar off
+#15 1.605 Processing ./dist/counter_backend-0.1.0-py3-none-any.whl
+#15 1.612 Processing ./dist/vendor/async_timeout-4.0.3-py3-none-any.whl
+#15 1.616 Processing ./dist/vendor/yarl-1.9.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+#15 1.620 Processing ./dist/vendor/pluggy-1.3.0-py3-none-any.whl
+#15 1.624 Processing ./dist/vendor/pytest-7.4.3-py3-none-any.whl
+#15 1.629 Processing ./dist/vendor/multidict-6.0.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+#15 1.633 Processing ./dist/vendor/iniconfig-2.0.0-py3-none-any.whl
+#15 1.637 Processing ./dist/vendor/idna-3.4-py3-none-any.whl
+#15 1.641 Processing ./dist/vendor/charset_normalizer-3.2.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+#15 1.645 Processing ./dist/vendor/aiohttp-3.8.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+#15 1.649 Processing ./dist/vendor/packaging-23.2-py3-none-any.whl
+#15 1.653 Processing ./dist/vendor/pytest_asyncio-0.21.1-py3-none-any.whl
+#15 1.658 Processing ./dist/vendor/aiosignal-1.3.1-py3-none-any.whl
+#15 1.662 Processing ./dist/vendor/pytest_aiohttp-1.0.5-py3-none-any.whl
+#15 1.665 Processing ./dist/vendor/frozenlist-1.4.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+#15 1.669 Processing ./dist/vendor/attrs-23.1.0-py3-none-any.whl
+#15 1.688 Installing collected packages: yarl, pytest-asyncio, pytest-aiohttp, pytest, pluggy, packaging, multidict, iniconfig, idna, frozenlist, counter-backend, charset-normalizer, attrs, async-timeout, aiosignal, aiohttp
+#15 2.146 Successfully installed aiohttp-3.8.5 aiosignal-1.3.1 async-timeout-4.0.3 attrs-23.1.0 charset-normalizer-3.2.0 counter-backend-0.1.0 frozenlist-1.4.0 idna-3.4 iniconfig-2.0.0 multidict-6.0.4 packaging-23.2 pluggy-1.3.0 pytest-7.4.3 pytest-aiohttp-1.0.5 pytest-asyncio-0.21.1 yarl-1.9.2
+#15 2.147 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#15 DONE 2.2s
+
+#16 exporting to image
+#16 exporting layers
+#16 exporting layers 0.8s done
+#16 exporting manifest sha256:883ecd119daebb5344a7ee36012c6f8c6952ee5abd875459a2beaeaf489d411b
+#16 exporting manifest sha256:883ecd119daebb5344a7ee36012c6f8c6952ee5abd875459a2beaeaf489d411b done
+#16 exporting config sha256:292d427cfe8f6351c00942cb6ef6f95a2e34b8fabe65cd7637b8bb88dd69b359 done
+#16 exporting attestation manifest sha256:805fbf7c8843a6029bcbaf8bbfa0817a430038d9614e93c989755a56bc70cda7 done
+#16 exporting manifest list sha256:84d3d282d2525213de0ab0e3d62edc832522233ea1cf8174d36f21286b5fb38e done
+#16 naming to docker.io/library/counter-backend:nonroot done
+#16 unpacking to docker.io/library/counter-backend:nonroot
+#16 unpacking to docker.io/library/counter-backend:nonroot 0.2s done
+#16 DONE 1.0s
