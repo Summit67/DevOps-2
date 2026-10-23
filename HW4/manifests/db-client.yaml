@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-client
+  namespace: hw4
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      automountServiceAccountToken: false
+      restartPolicy: Never
+      containers:
+        - name: psql
+          image: postgres:16-alpine
+          resources:
+            requests: {cpu: 10m, memory: 16Mi}
+            limits: {cpu: 100m, memory: 64Mi}
+          env:
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef: {name: postgres-auth, key: password}
+          command: [psql]
+          args: [-h, counter-postgres-0.counter-postgres.hw4.svc.cluster.local, -U, counter, -d, counter, -c, 'SELECT inet_server_addr(); TABLE visits;']

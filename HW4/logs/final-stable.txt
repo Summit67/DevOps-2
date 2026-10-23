@@ -1,0 +1,43 @@
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/counter-backend    1/1     1            1           4m49s
+deployment.apps/counter-frontend   1/1     1            1           4m49s
+
+NAME                                READY   AGE
+statefulset.apps/counter-postgres   1/1     4m49s
+
+NAME                           DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+daemonset.apps/node-exporter   1         1         1       1            1           <none>          6m31s
+
+NAME                                    READY   STATUS      RESTARTS   AGE
+pod/counter-backend-5b78fdc468-zrdjn    1/1     Running     0          4m48s
+pod/counter-check-g2n85                 0/1     Completed   0          4m44s
+pod/counter-frontend-5c8f94b875-fbt24   1/1     Running     0          4m48s
+pod/counter-postgres-0                  1/1     Running     0          4m48s
+pod/db-client-ngrpd                     0/1     Completed   0          11m
+pod/manual-evening-rbzps                0/1     Completed   0          5m45s
+pod/manual-morning-xw4c5                0/1     Completed   0          5m54s
+pod/node-exporter-rpqxv                 1/1     Running     0          6m30s
+NAME                              READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/second-backend    1/1     1            1           7m45s
+deployment.apps/second-frontend   1/1     1            1           7m45s
+
+NAME                                   READY   STATUS      RESTARTS   AGE
+pod/second-backend-995cd7cc8-b6r97     1/1     Running     0          7m44s
+pod/second-check-hwnzp                 0/1     Completed   0          7m41s
+pod/second-frontend-6546cd796c-jrgz5   1/1     Running     0          7m44s
+NAME                                QOS         REQUESTS                   LIMITS
+counter-backend-5b78fdc468-zrdjn    Burstable   map[cpu:25m memory:32Mi]   map[cpu:300m memory:96Mi]
+counter-check-g2n85                 Burstable   map[cpu:10m memory:16Mi]   map[cpu:100m memory:64Mi]
+counter-frontend-5c8f94b875-fbt24   Burstable   map[cpu:25m memory:64Mi]   map[cpu:400m memory:256Mi]
+counter-postgres-0                  Burstable   map[cpu:25m memory:64Mi]   map[cpu:300m memory:192Mi]
+db-client-ngrpd                     Burstable   map[cpu:10m memory:16Mi]   map[cpu:100m memory:64Mi]
+manual-evening-rbzps                Burstable   map[cpu:10m memory:16Mi]   map[cpu:100m memory:64Mi]
+manual-morning-xw4c5                Burstable   map[cpu:10m memory:16Mi]   map[cpu:100m memory:64Mi]
+node-exporter-rpqxv                 Burstable   map[cpu:10m memory:16Mi]   map[cpu:100m memory:64Mi]
+{"count": 1}
+ id |           note            
+----+---------------------------
+  1 | created by init.sql
+  2 | saved before pod deletion
+(2 rows)
+

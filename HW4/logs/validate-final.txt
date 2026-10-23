@@ -1,0 +1,10 @@
+==> Linting ./chart
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
+daemonset.apps/node-exporter unchanged (server dry run)
+serviceaccount/frontend-scaler unchanged (server dry run)
+role.rbac.authorization.k8s.io/frontend-scaler unchanged (server dry run)
+rolebinding.rbac.authorization.k8s.io/frontend-scaler unchanged (server dry run)
+cronjob.batch/frontend-morning unchanged (server dry run)
+cronjob.batch/frontend-evening unchanged (server dry run)

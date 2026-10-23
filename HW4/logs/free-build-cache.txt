@@ -1,0 +1,17 @@
+Flag --keep-storage has been deprecated, keep-storage flag has been changed to reserved-space
+ID						RECLAIMABLE	SIZE		LAST ACCESSED
+pr3t6q2th7gq6s4p3taamxotw               	true 		18MB      	24 hours ago
+4o9zi33ugqf2w1ggrcw2aj1za               	true 	34.53MB   	24 hours ago
+p6b88b4752jbjqcnarodavtbb               	true 	34.53MB   	24 hours ago
+1niknku1q8sq653w59hwtgblz               	true 	93.73MB   	5 minutes ago
+mz3pozydxihvuvjkpk1agk5zw*              	true 	8.192kB   	5 minutes ago
+pciyr90fq1286f083mog511o9               	true 	8.285kB   	5 minutes ago
+ie5nxnqdnvsu8voe3aotm59vl*              	true 	249.9kB   	5 minutes ago
+vqv2z7g0ma8wmzw2af8a6bhvy*              	true 	177.8MB   	5 minutes ago
+07rbtkkcrvx76pwgsvp7a45n9               	true 	16.38kB   	5 minutes ago
+l2n9qjpr9exy1b8zfm9zk61nv               	true 	12.29kB   	5 minutes ago
+nucu0c9euu60r2z2ndm3aepff               	true 	24.58kB   	5 minutes ago
+r3i2xfggnc9qpz0xp65mdscyv               	true 	781.4MB   	5 minutes ago
+Total:	1.14GB
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2        20G   17G  2.2G  89% /

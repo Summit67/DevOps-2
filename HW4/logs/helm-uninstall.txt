@@ -1,0 +1,9 @@
+These resources were kept due to the resource policy:
+[PersistentVolumeClaim] counter-postgres-data
+
+release "counter" uninstalled
+pod/counter-postgres-0 condition met
+NAME                    STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+counter-postgres-data   Bound    pvc-7ff61715-2ee2-4a2c-8d11-4df4a8b4e3ff   256Mi      RWO            local-path     <unset>                 13m
+NAME            TYPE     DATA   AGE
+postgres-auth   Opaque   1      13m

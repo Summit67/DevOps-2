@@ -1,0 +1,6 @@
+NAME               STATUS   ROLES           AGE   VERSION
+k3d-hw4-server-0   Ready    control-plane   12m   v1.35.5+k3s1
+NAME            DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+node-exporter   1         1         1       1            1           <none>          11s
+NAME                  READY   STATUS    RESTARTS   AGE   IP           NODE               NOMINATED NODE   READINESS GATES
+node-exporter-rpqxv   1/1     Running   0          10s   172.19.0.2   k3d-hw4-server-0   <none>           <none>

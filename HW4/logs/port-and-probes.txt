@@ -1,0 +1,7 @@
+9000
+{"env":[{"name":"PORT","valueFrom":{"configMapKeyRef":{"key":"BACKEND_PORT","name":"counter-config"}}}],"image":"counter-backend:hw4-v1","imagePullPolicy":"Never","livenessProbe":{"failureThreshold":6,"httpGet":{"path":"/api/counter","port":"http","scheme":"HTTP"},"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"name":"backend","ports":[{"containerPort":9000,"name":"http","protocol":"TCP"}],"readinessProbe":{"failureThreshold":1,"httpGet":{"path":"/api/counter","port":"http","scheme":"HTTP"},"periodSeconds":3,"successThreshold":1,"timeoutSeconds":1},"resources":{"limits":{"cpu":"300m","memory":"96Mi"},"requests":{"cpu":"25m","memory":"32Mi"}},"startupProbe":{"failureThreshold":60,"httpGet":{"path":"/api/counter","port":"http","scheme":"HTTP"},"periodSeconds":2,"successThreshold":1,"timeoutSeconds":1},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}
+NAME                                QOS         REQUESTS                   LIMITS
+counter-backend-546d98d9dc-2qc9r    Burstable   map[cpu:25m memory:32Mi]   map[cpu:300m memory:96Mi]
+counter-check-hzfpd                 Burstable   map[cpu:10m memory:16Mi]   map[cpu:100m memory:64Mi]
+counter-frontend-576cd7c5f6-5xbrb   Burstable   map[cpu:25m memory:64Mi]   map[cpu:400m memory:256Mi]
+counter-postgres-0                  Burstable   map[cpu:25m memory:64Mi]   map[cpu:300m memory:192Mi]

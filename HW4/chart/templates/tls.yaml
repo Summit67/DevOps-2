@@ -1,0 +1,10 @@
+{{- if .Values.tls.create }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Release.Name }}-tls
+type: kubernetes.io/tls
+data:
+  tls.crt: {{ required "tls.crt required" .Values.tls.crt | b64enc | quote }}
+  tls.key: {{ required "tls.key required" .Values.tls.key | b64enc | quote }}
+{{- end }}

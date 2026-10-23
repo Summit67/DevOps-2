@@ -1,0 +1,49 @@
+NAME                       TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE     SELECTOR
+service/counter-backend    ClusterIP   10.43.149.38   <none>        9000/TCP   3m12s   app=counter-backend
+service/counter-frontend   ClusterIP   10.43.38.132   <none>        8080/TCP   3m12s   app=counter-frontend
+service/counter-postgres   ClusterIP   None           <none>        5432/TCP   3m12s   app=counter-postgres
+
+NAME                                CLASS     HOSTS                  ADDRESS      PORTS     AGE
+ingress.networking.k8s.io/counter   traefik   counter.localtest.me   172.19.0.2   80, 443   3m12s
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    meta.helm.sh/release-name: counter
+    meta.helm.sh/release-namespace: hw4
+  creationTimestamp: "2026-10-23T15:54:28Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  name: counter
+  namespace: hw4
+  resourceVersion: "737"
+  uid: a25388e0-f8a0-49fc-824d-f4f7b3eb55d6
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: counter.localtest.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: counter-backend
+            port:
+              name: http
+        path: /api
+        pathType: Prefix
+      - backend:
+          service:
+            name: counter-frontend
+            port:
+              name: http
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - counter.localtest.me
+    secretName: counter-tls
+status:
+  loadBalancer:
+    ingress:
+    - ip: 172.19.0.2

@@ -1,0 +1,2 @@
+deployment.apps/counter-backend scaled
+deployment "counter-backend" successfully rolled out

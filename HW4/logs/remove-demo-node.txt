@@ -1,0 +1,4 @@
+[36mINFO[0m[0000] Successfully deleted 1 node(s)!              
+node "k3d-extra-0" deleted
+NAME            DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+node-exporter   2         2         2       2            2           <none>          35s

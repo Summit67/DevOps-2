@@ -1,0 +1,9 @@
+NAME                 READY   STATUS    RESTARTS   AGE   IP           NODE               NOMINATED NODE   READINESS GATES
+counter-postgres-0   1/1     Running   0          4s    10.42.0.16   k3d-hw4-server-0   <none>           <none>
+NAME               TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
+counter-postgres   ClusterIP   None         <none>        5432/TCP   4m10s
+NAME                                       RECLAIM   PATH
+pvc-7ff61715-2ee2-4a2c-8d11-4df4a8b4e3ff   Delete    <none>
+NAME            TYPE     DATA   AGE
+postgres-auth   Opaque   1      4m12s
+[{"name":"POSTGRES_USER","value":"counter"},{"name":"POSTGRES_DB","value":"counter"},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"postgres-auth"}}},{"name":"PGDATA","value":"/var/lib/postgresql/data/pgdata"}]

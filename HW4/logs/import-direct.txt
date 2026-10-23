@@ -1,0 +1,2 @@
+unpacking docker.io/library/counter-backend:hw4-v1 (sha256:488ddeb7eafdab0247f7defe21f3290ff007a071f949fce440a7c525d552dea1)...done
+unpacking docker.io/library/counter-frontend:hw4-v1 (sha256:e84ae47150f2b604cfe6b02a15c0621ecc2e9026fd7bd52415869d9366ffb95a)...done

@@ -1,0 +1,89 @@
+---
+# Source: counter/templates/database.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: counter-postgres-init
+data:
+  init.sql: |
+    CREATE TABLE visits (id integer PRIMARY KEY, note text NOT NULL);
+    INSERT INTO visits VALUES (1, 'created by init.sql');
+---
+# Source: counter/templates/database.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: counter-postgres-data
+  annotations:
+    helm.sh/resource-policy: keep
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 256Mi
+---
+# Source: counter/templates/database.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: counter-postgres
+spec:
+  clusterIP: None
+  selector:
+    app: counter-postgres
+  ports:
+    - {name: postgres, port: 5432, targetPort: postgres}
+---
+# Source: counter/templates/database.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: counter-postgres
+spec:
+  serviceName: counter-postgres
+  replicas: 1
+  selector:
+    matchLabels: {app: counter-postgres}
+  template:
+    metadata:
+      labels: {app: counter-postgres}
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - {name: postgres, containerPort: 5432}
+          env:
+            - {name: POSTGRES_USER, value: counter}
+            - {name: POSTGRES_DB, value: counter}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef: {name: postgres-auth, key: password}
+            - {name: PGDATA, value: /var/lib/postgresql/data/pgdata}
+          resources:
+            limits:
+              cpu: 300m
+              memory: 192Mi
+            requests:
+              cpu: 25m
+              memory: 64Mi
+          startupProbe:
+            exec: {command: [pg_isready, -U, counter, -d, counter]}
+            periodSeconds: 2
+            failureThreshold: 60
+          readinessProbe:
+            exec: {command: [pg_isready, -U, counter, -d, counter]}
+            periodSeconds: 5
+          livenessProbe:
+            exec: {command: [pg_isready, -U, counter, -d, counter]}
+            periodSeconds: 10
+          volumeMounts:
+            - {name: data, mountPath: /var/lib/postgresql/data}
+            - {name: init, mountPath: /docker-entrypoint-initdb.d, readOnly: true}
+      volumes:
+        - name: data
+          persistentVolumeClaim: {claimName: counter-postgres-data}
+        - name: init
+          configMap: {name: counter-postgres-init}

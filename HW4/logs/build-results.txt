@@ -1,0 +1,24 @@
+WARNING: This output is designed for human readability. For machine-readable output, please use --format.
+IMAGE                        ID             DISK USAGE   CONTENT SIZE   EXTRA
+counter-backend:hw4-v1       488ddeb7eafd        234MB         57.8MB        
+counter-backend:hw4-v2       353518c9f440        234MB         57.8MB        
+counter-backend:multistage   a775736e7351        234MB         58.8MB   U    
+counter-backend:nonroot      84d3d282d252        234MB         58.8MB   U    
+counter-backend:single       f89308c3744b        373MB         93.7MB   U    
+counter-frontend:hw4-v1      e84ae47150f2        420MB          104MB        
+#15 exporting manifest sha256:5fbebc8051d46eb5cb99f1fc2167d718d63e0bc9535f88c0fdbed2cd4b80a532 done
+#15 exporting config sha256:0c2bc2b7df1a658526398407dbd861a525f4b77da39b936f1046f168bc0de8cd done
+#15 exporting attestation manifest sha256:07b2c5046c2759bb14a19f4690c64d8841b175045c78406a5d48ffcde4787f8b done
+#15 exporting manifest list sha256:e84ae47150f2b604cfe6b02a15c0621ecc2e9026fd7bd52415869d9366ffb95a done
+#15 naming to docker.io/library/counter-frontend:hw4-v1 done
+#15 unpacking to docker.io/library/counter-frontend:hw4-v1
+#15 unpacking to docker.io/library/counter-frontend:hw4-v1 0.4s done
+#15 DONE 2.3s
+#13 exporting manifest sha256:e10565ed4ef6785a02f29fc925de2983261fb22ae309f9b08b5f61dc201639f9 done
+#13 exporting config sha256:6a28635c63a3e0a838b1862830d18168df4fc83387b37c8d382ce2e4c420fda5 done
+#13 exporting attestation manifest sha256:37766f5ebf80a5fecb4128f7b85356a404ac0f3f57c12aa316e1a3ed7cf25559 done
+#13 exporting manifest list sha256:488ddeb7eafdab0247f7defe21f3290ff007a071f949fce440a7c525d552dea1 done
+#13 naming to docker.io/library/counter-backend:hw4-v1 done
+#13 unpacking to docker.io/library/counter-backend:hw4-v1
+#13 unpacking to docker.io/library/counter-backend:hw4-v1 0.2s done
+#13 DONE 1.0s

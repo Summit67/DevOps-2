@@ -1,0 +1,12 @@
+node/k3d-extra-0 condition met
+node/k3d-hw4-server-0 condition met
+Waiting for daemon set "node-exporter" rollout to finish: 1 of 2 updated pods are available...
+daemon set "node-exporter" successfully rolled out
+NAME               STATUS                     ROLES           AGE   VERSION
+k3d-extra-0        Ready,SchedulingDisabled   <none>          19s   v1.35.5+k3s1
+k3d-hw4-server-0   Ready                      control-plane   12m   v1.35.5+k3s1
+NAME            DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+node-exporter   2         2         2       2            2           <none>          34s
+NAME                  READY   STATUS    RESTARTS   AGE   IP           NODE               NOMINATED NODE   READINESS GATES
+node-exporter-j25s6   1/1     Running   0          19s   172.19.0.4   k3d-extra-0        <none>           <none>
+node-exporter-rpqxv   1/1     Running   0          33s   172.19.0.2   k3d-hw4-server-0   <none>           <none>

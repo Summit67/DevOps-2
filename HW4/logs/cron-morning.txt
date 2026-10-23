@@ -1,0 +1,7 @@
+job.batch/manual-morning created
+job.batch/manual-morning condition met
+counter-frontend replicas = 3
+Waiting for deployment "counter-frontend" rollout to finish: 1 of 3 updated replicas are available...
+deployment "counter-frontend" successfully rolled out
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+counter-frontend   3/3     3            3           12m

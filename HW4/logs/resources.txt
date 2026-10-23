@@ -1,0 +1,10 @@
+               total        used        free      shared  buff/cache   available
+Mem:           3.3Gi       1.6Gi       125Mi       130Mi       1.9Gi       1.6Gi
+Swap:          3.3Gi        11Mi       3.3Gi
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2        20G   15G  3.6G  81% /
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          10        7         3.887GB   3.404GB (87%)
+Containers      7         1         327.7kB   258kB (78%)
+Local Volumes   2         2         57.67MB   0B (0%)
+Build Cache     52        0         2.06GB    1.067GB

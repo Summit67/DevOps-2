@@ -1,0 +1,30 @@
+NAMESPACE     NAME                                      READY   STATUS        RESTARTS   AGE
+hw4-second    second-backend-995cd7cc8-b6r97            1/1     Running       0          3m3s
+hw4-second    second-check-hwnzp                        0/1     Completed     0          3m
+hw4-second    second-frontend-6546cd796c-jrgz5          1/1     Running       0          3m3s
+hw4           counter-backend-5b78fdc468-zrdjn          1/1     Running       0          7s
+hw4           counter-backend-6d647ddc8f-jwrf2          1/1     Terminating   0          27s
+hw4           counter-check-g2n85                       0/1     Completed     0          3s
+hw4           counter-frontend-5c8f94b875-9fmcp         1/1     Terminating   0          27s
+hw4           counter-frontend-5c8f94b875-fbt24         1/1     Running       0          7s
+hw4           counter-postgres-0                        1/1     Running       0          7s
+hw4           db-client-ngrpd                           0/1     Completed     0          6m22s
+hw4           manual-evening-rbzps                      0/1     Completed     0          64s
+hw4           manual-morning-xw4c5                      0/1     Completed     0          73s
+hw4           node-exporter-rpqxv                       1/1     Running       0          109s
+kube-system   coredns-8db54c48d-nch62                   1/1     Running       0          13m
+kube-system   helm-install-traefik-crd-mgr2t            0/1     Completed     0          13m
+kube-system   helm-install-traefik-jqwtw                0/1     Completed     1          13m
+kube-system   local-path-provisioner-5d9d9885bc-gb9l2   1/1     Running       0          13m
+kube-system   svclb-traefik-5b4c10b0-z2d45              2/2     Running       0          13m
+kube-system   traefik-9bcdbbd9-splc4                    1/1     Running       0          13m
+NAME       	NAMESPACE  	REVISION	UPDATED                                	STATUS  	CHART                        	APP VERSION
+counter    	hw4        	1       	2026-10-23 19:08:00.55064926 +0300 MSK 	deployed	counter-0.1.0                	hw4-v1     
+second     	hw4-second 	1       	2026-10-23 19:05:04.611450307 +0300 MSK	deployed	counter-0.1.0                	hw4-v1     
+traefik    	kube-system	1       	2026-10-23 15:54:45.424359283 +0000 UTC	deployed	traefik-39.0.701+up39.0.7    	v3.6.12    
+traefik-crd	kube-system	1       	2026-10-23 15:54:43.489021008 +0000 UTC	deployed	traefik-crd-39.0.701+up39.0.7	v3.6.12    
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2        20G   17G  2.2G  89% /
+               total        used        free      shared  buff/cache   available
+Mem:           3.3Gi       1.9Gi       289Mi        15Mi       1.3Gi       1.3Gi
+Swap:          3.3Gi       698Mi       2.6Gi

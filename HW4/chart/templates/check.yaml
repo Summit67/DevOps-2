@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-check
+  annotations:
+    helm.sh/hook: post-install,post-upgrade,post-rollback
+    helm.sh/hook-delete-policy: before-hook-creation
+spec:
+  backoffLimit: 2
+  activeDeadlineSeconds: 120
+  template:
+    spec:
+      automountServiceAccountToken: false
+      restartPolicy: Never
+      containers:
+        - name: check
+          image: {{ .Values.backend.image | quote }}
+          imagePullPolicy: Never
+          resources:
+            {{- toYaml .Values.hook.resources | nindent 12 }}
+          command: [python, -u, -c]
+          args:
+            - |
+              import urllib.request
+              for url in ['http://{{ .Release.Name }}-frontend:{{ .Values.frontend.port }}/', 'http://{{ .Release.Name }}-backend:{{ .Values.backend.port }}/api/counter']:
+                  with urllib.request.urlopen(url, timeout=15) as r:
+                      print(url, r.status)
+                      assert r.status == 200

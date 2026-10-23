@@ -1,0 +1,12 @@
+NAME                               READY   STATUS              RESTARTS   AGE
+counter-backend-5645b676c5-dq6zx   0/1     ErrImageNeverPull   0          29s
+counter-backend-6d647ddc8f-sxxpg   1/1     Running             0          65s
+HTTP responses: {'200': 48}
+deployment.apps/counter-backend 
+REVISION  CHANGE-CAUSE
+1         Initial installation
+2         Backend image hw4-v2
+3         Graceful shutdown: preStop 10 seconds
+4         Backend image hw4-v2
+5         Check missing image
+

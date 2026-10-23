@@ -1,0 +1,24 @@
+[36mINFO[0m[0000] portmapping '127.0.0.1:8080:80' targets the loadbalancer: defaulting to [servers:*:proxy agents:*:proxy] 
+[36mINFO[0m[0000] portmapping '127.0.0.1:8443:443' targets the loadbalancer: defaulting to [servers:*:proxy agents:*:proxy] 
+[36mINFO[0m[0000] Prep: Network                                
+[36mINFO[0m[0000] Created network 'k3d-hw4'                    
+[36mINFO[0m[0000] Created image volume k3d-hw4-images          
+[36mINFO[0m[0000] Starting new tools node...                   
+[36mINFO[0m[0001] Creating node 'k3d-hw4-server-0'             
+[36mINFO[0m[0002] Pulling image 'ghcr.io/k3d-io/k3d-tools:5.9.0' 
+[36mINFO[0m[0003] Pulling image 'rancher/k3s:v1.35.5-k3s1'     
+[36mINFO[0m[0006] Starting node 'k3d-hw4-tools'                
+[36mINFO[0m[0012] Creating LoadBalancer 'k3d-hw4-serverlb'     
+[36mINFO[0m[0014] Pulling image 'ghcr.io/k3d-io/k3d-proxy:5.9.0' 
+[36mINFO[0m[0020] Using the k3d-tools node to gather environment information 
+[36mINFO[0m[0020] HostIP: using network gateway 172.19.0.1 address 
+[36mINFO[0m[0020] Starting cluster 'hw4'                       
+[36mINFO[0m[0020] Starting servers...                          
+[36mINFO[0m[0020] Starting node 'k3d-hw4-server-0'             
+[36mINFO[0m[0025] All agents already running.                  
+[36mINFO[0m[0025] Starting helpers...                          
+[36mINFO[0m[0025] Starting node 'k3d-hw4-serverlb'             
+[36mINFO[0m[0032] Injecting records for hostAliases (incl. host.k3d.internal) and for 2 network members into CoreDNS configmap... 
+[36mINFO[0m[0034] Cluster 'hw4' created successfully!          
+[36mINFO[0m[0034] You can now use it like this:                
+kubectl cluster-info

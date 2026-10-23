@@ -1,0 +1,13 @@
+job.batch/db-client created
+job.batch/db-client condition met
+ inet_server_addr 
+------------------
+ 10.42.0.16
+(1 row)
+
+ id |           note            
+----+---------------------------
+  1 | created by init.sql
+  2 | saved before pod deletion
+(2 rows)
+

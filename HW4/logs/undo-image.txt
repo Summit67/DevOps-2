@@ -1,0 +1,10 @@
+deployment.apps/counter-backend rolled back
+deployment "counter-backend" successfully rolled out
+deployment.apps/counter-backend 
+REVISION  CHANGE-CAUSE
+1         Initial installation
+2         Backend image hw4-v2
+3         Graceful shutdown: preStop 10 seconds
+5         Check missing image
+6         Backend image hw4-v2
+

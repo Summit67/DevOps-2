@@ -1,0 +1,4 @@
+.secrets/
+*.key
+kubeconfig*
+logs/commands.jsonl

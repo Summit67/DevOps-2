@@ -1,0 +1,29 @@
+pod/counter-backend-546d98d9dc-2qc9r condition met
+NAME                               READY   STATUS    RESTARTS   AGE     IP           NODE               NOMINATED NODE   READINESS GATES
+counter-backend-546d98d9dc-2qc9r   0/1     Running   0          4m57s   10.42.0.7    k3d-hw4-server-0   <none>           <none>
+counter-backend-546d98d9dc-6whf4   1/1     Running   0          7s      10.42.0.18   k3d-hw4-server-0   <none>           <none>
+counter-backend-546d98d9dc-rw9cq   1/1     Running   0          7s      10.42.0.17   k3d-hw4-server-0   <none>           <none>
+counter-backend-546d98d9dc-2qc9r ready=false
+counter-backend-546d98d9dc-6whf4 ready=true
+counter-backend-546d98d9dc-rw9cq ready=true
+HTTP responses: {'200': 48}
+pod/counter-backend-546d98d9dc-2qc9r condition met
+NAME                               READY   STATUS    RESTARTS     AGE
+counter-backend-546d98d9dc-2qc9r   1/1     Running   1 (4s ago)   6m25s
+counter-backend-546d98d9dc-6whf4   1/1     Running   0            95s
+counter-backend-546d98d9dc-rw9cq   1/1     Running   0            95s
+Node-Selectors:               <none>
+Tolerations:                  node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason             Age                     From               Message
+  ----     ------             ----                    ----               -------
+  Normal   Scheduled          6m24s                   default-scheduler  Successfully assigned hw4/counter-backend-546d98d9dc-2qc9r to k3d-hw4-server-0
+  Warning  ErrImageNeverPull  4m22s (x11 over 6m25s)  kubelet            spec.containers{backend}: Container image "counter-backend:hw4-v1" is not present with pull policy of Never
+  Warning  Failed             4m22s (x11 over 6m25s)  kubelet            spec.containers{backend}: Error: ErrImageNeverPull
+  Warning  Unhealthy          84s (x3 over 88s)       kubelet            spec.containers{backend}: Readiness probe failed: Get "http://10.42.0.7:9000/api/counter": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+  Warning  Unhealthy          84s                     kubelet            spec.containers{backend}: Liveness probe failed: Get "http://10.42.0.7:9000/api/counter": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+  Normal   Killing            34s                     kubelet            spec.containers{backend}: Container backend failed liveness probe, will be restarted
+  Normal   Pulled             4s (x2 over 4m10s)      kubelet            spec.containers{backend}: Container image "counter-backend:hw4-v1" already present on machine and can be accessed by the pod
+  Normal   Created            4s (x2 over 4m10s)      kubelet            spec.containers{backend}: Container created
+  Normal   Started            4s (x2 over 4m10s)      kubelet            spec.containers{backend}: Container started

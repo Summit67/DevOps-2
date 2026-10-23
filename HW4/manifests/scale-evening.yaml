@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: frontend-evening
+  namespace: hw4
+spec:
+  schedule: "0 18 * * *"
+  timeZone: Europe/Moscow
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 300
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      activeDeadlineSeconds: 60
+      template:
+        spec:
+          serviceAccountName: frontend-scaler
+          restartPolicy: Never
+          containers:
+            - name: scale
+              image: counter-backend:hw4-v1
+              imagePullPolicy: Never
+              resources:
+                requests: {cpu: 10m, memory: 16Mi}
+                limits: {cpu: 100m, memory: 64Mi}
+              command: [python, -u, -c]
+              args:
+                - |
+                  import json, ssl, urllib.request
+                  from pathlib import Path
+                  sa = Path('/var/run/secrets/kubernetes.io/serviceaccount')
+                  url = 'https://kubernetes.default.svc/apis/apps/v1/namespaces/hw4/deployments/counter-frontend/scale'
+                  request = urllib.request.Request(url, data=json.dumps({'spec': {'replicas': 1}}).encode(), method='PATCH', headers={'Authorization': 'Bearer ' + (sa/'token').read_text(), 'Content-Type': 'application/merge-patch+json'})
+                  with urllib.request.urlopen(request, context=ssl.create_default_context(cafile=str(sa/'ca.crt'))) as r:
+                      result = json.load(r)
+                      print('counter-frontend replicas =', result['spec']['replicas'])

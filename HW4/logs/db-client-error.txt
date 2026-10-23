@@ -1,0 +1,2 @@
+Found 2 pods, using pod/db-client-2kqh6
+psql: error: connection to server at "counter-postgres-0.counter-postgres.hw4.svc.cluster.local" (10.42.0.16), port 5432 failed: FATAL:  password authentication failed for user "counter"

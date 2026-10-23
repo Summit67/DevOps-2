@@ -1,0 +1,12 @@
+NAME       	NAMESPACE  	REVISION	UPDATED                                	STATUS  	CHART                        	APP VERSION
+counter    	hw4        	4       	2026-10-23 19:03:48.344267901 +0300 MSK	deployed	counter-0.1.0                	hw4-v1     
+second     	hw4-second 	1       	2026-10-23 19:05:04.611450307 +0300 MSK	deployed	counter-0.1.0                	hw4-v1     
+traefik    	kube-system	1       	2026-10-23 15:54:45.424359283 +0000 UTC	deployed	traefik-39.0.701+up39.0.7    	v3.6.12    
+traefik-crd	kube-system	1       	2026-10-23 15:54:43.489021008 +0000 UTC	deployed	traefik-crd-39.0.701+up39.0.7	v3.6.12    
+NAMESPACE    NAME      CLASS     HOSTS                         ADDRESS      PORTS     AGE
+hw4-second   second    traefik   second.counter.localtest.me   172.19.0.2   80, 443   8s
+hw4          counter   traefik   counter.localtest.me          172.19.0.2   80, 443   10m
+{"count": 0}
+{"count": 0}
+http://second-frontend:8080/ 200
+http://second-backend:9000/api/counter 200

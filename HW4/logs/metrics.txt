@@ -1,0 +1,6 @@
+172.19.0.4
+node_memory_MemTotal_bytes 3.51328256e+09
+node_uname_info{domainname="(none)",machine="x86_64",nodename="k3d-extra-0",release="7.0.0-38-generic",sysname="Linux",version="#38-Ubuntu SMP PREEMPT_DYNAMIC Fri Sep  4 09:10:14 UTC 2026"} 1
+172.19.0.2
+node_memory_MemTotal_bytes 3.51328256e+09
+node_uname_info{domainname="(none)",machine="x86_64",nodename="k3d-hw4-server-0",release="7.0.0-38-generic",sysname="Linux",version="#38-Ubuntu SMP PREEMPT_DYNAMIC Fri Sep  4 09:10:14 UTC 2026"} 1

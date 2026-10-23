@@ -1,0 +1,31 @@
+error: timed out waiting for the condition on pods/counter-backend-546d98d9dc-2qc9r
+NAME                               READY   STATUS    RESTARTS   AGE     IP           NODE               NOMINATED NODE   READINESS GATES
+counter-backend-546d98d9dc-2qc9r   1/1     Running   0          3m43s   10.42.0.7    k3d-hw4-server-0   <none>           <none>
+counter-backend-546d98d9dc-6ztl8   1/1     Running   0          30s     10.42.0.14   k3d-hw4-server-0   <none>           <none>
+counter-backend-546d98d9dc-dcvpp   1/1     Running   0          30s     10.42.0.13   k3d-hw4-server-0   <none>           <none>
+error: error parsing jsonpath {range .items[*].endpoints[*]}{.targetRef.name}{" ready="}{.conditions.ready}{"
+"}{end}, unterminated quoted string
+HTTP responses: {'200': 48}
+pod/counter-backend-546d98d9dc-2qc9r condition met
+NAME                               READY   STATUS    RESTARTS   AGE
+counter-backend-546d98d9dc-2qc9r   1/1     Running   0          3m53s
+counter-backend-546d98d9dc-6ztl8   1/1     Running   0          40s
+counter-backend-546d98d9dc-dcvpp   1/1     Running   0          40s
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:                      <none>
+QoS Class:                    Burstable
+Node-Selectors:               <none>
+Tolerations:                  node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason             Age                    From               Message
+  ----     ------             ----                   ----               -------
+  Normal   Scheduled          3m53s                  default-scheduler  Successfully assigned hw4/counter-backend-546d98d9dc-2qc9r to k3d-hw4-server-0
+  Warning  ErrImageNeverPull  110s (x11 over 3m53s)  kubelet            spec.containers{backend}: Container image "counter-backend:hw4-v1" is not present with pull policy of Never
+  Warning  Failed             110s (x11 over 3m53s)  kubelet            spec.containers{backend}: Error: ErrImageNeverPull
+  Normal   Pulled             98s                    kubelet            spec.containers{backend}: Container image "counter-backend:hw4-v1" already present on machine and can be accessed by the pod
+  Normal   Created            98s                    kubelet            spec.containers{backend}: Container created
+  Normal   Started            98s                    kubelet            spec.containers{backend}: Container started

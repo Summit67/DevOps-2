@@ -1,0 +1,3 @@
+NAME               SCHEDULE     TIMEZONE        SERVICEACCOUNT
+frontend-evening   0 18 * * *   Europe/Moscow   frontend-scaler
+frontend-morning   0 9 * * *    Europe/Moscow   frontend-scaler

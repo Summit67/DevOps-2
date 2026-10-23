@@ -1,0 +1,23 @@
+NAME                                    READY   STATUS      RESTARTS   AGE
+pod/counter-backend-546d98d9dc-2qc9r    1/1     Running     0          2m23s
+pod/counter-check-hzfpd                 0/1     Completed   0          4s
+pod/counter-frontend-576cd7c5f6-5xbrb   1/1     Running     0          2m23s
+pod/counter-postgres-0                  1/1     Running     0          2m23s
+
+NAME                       TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+service/counter-backend    ClusterIP   10.43.149.38   <none>        9000/TCP   2m23s
+service/counter-frontend   ClusterIP   10.43.38.132   <none>        8080/TCP   2m23s
+service/counter-postgres   ClusterIP   None           <none>        5432/TCP   2m23s
+
+NAME                                CLASS     HOSTS                  ADDRESS      PORTS     AGE
+ingress.networking.k8s.io/counter   traefik   counter.localtest.me   172.19.0.2   80, 443   2m23s
+
+NAME                                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/counter-postgres-data   Bound    pvc-7ff61715-2ee2-4a2c-8d11-4df4a8b4e3ff   256Mi      RWO            local-path     <unset>                 2m23s
+http://counter-frontend:8080/ 200
+http://counter-backend:9000/api/counter 200
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2        20G   18G  1.2G  94% /
+               total        used        free      shared  buff/cache   available
+Mem:           3.3Gi       1.8Gi       135Mi        17Mi       1.7Gi       1.5Gi
+Swap:          3.3Gi       529Mi       2.8Gi

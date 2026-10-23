@@ -1,0 +1,7 @@
+Release "second" does not exist. Installing it now.
+NAME: second
+LAST DEPLOYED: Fri Oct 23 19:05:04 2026
+NAMESPACE: hw4-second
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None

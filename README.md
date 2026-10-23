@@ -53,3 +53,7 @@ curl -s http://127.0.0.1:9187/metrics | grep '^pg_up '
 ## HW3
 
 [Мониторинг ВМ и Docker-образы counter-backend](HW3/README.md)
+
+## HW4
+
+[Counter в Kubernetes: манифесты, Helm-чарт и отчёт](HW4/README.md)

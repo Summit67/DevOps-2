@@ -1,0 +1,316 @@
+---
+# Source: counter/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: counter-config
+data:
+  BACKEND_PORT: "9000"
+  FRONTEND_PORT: "8080"
+---
+# Source: counter/templates/database.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: counter-postgres-init
+data:
+  init.sql: |
+    CREATE TABLE visits (id integer PRIMARY KEY, note text NOT NULL);
+    INSERT INTO visits VALUES (1, 'created by init.sql');
+---
+# Source: counter/templates/database.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: counter-postgres-data
+  annotations:
+    helm.sh/resource-policy: keep
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 256Mi
+---
+# Source: counter/templates/application.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: counter-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: counter-backend
+  ports:
+    - {name: http, port: 9000, targetPort: http}
+---
+# Source: counter/templates/application.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: counter-frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: counter-frontend
+  ports:
+    - {name: http, port: 8080, targetPort: http}
+---
+# Source: counter/templates/database.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: counter-postgres
+spec:
+  clusterIP: None
+  selector:
+    app: counter-postgres
+  ports:
+    - {name: postgres, port: 5432, targetPort: postgres}
+---
+# Source: counter/templates/application.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: counter-backend
+  annotations:
+    kubernetes.io/change-cause: "Initial installation"
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  minReadySeconds: 5
+  progressDeadlineSeconds: 120
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: counter-backend
+  template:
+    metadata:
+      labels:
+        app: counter-backend
+      annotations:
+        checksum/config: 5909c8880be8ea98fde4307b9c321adf67c7da20fb98aa45369e6cfd8c4e7b6e
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: backend
+          image: "counter-backend:hw4-v1"
+          imagePullPolicy: Never
+          lifecycle:
+            preStop:
+              exec:
+                command: [sh, -c, "sleep 10"]
+          ports:
+            - {name: http, containerPort: 9000}
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: counter-config
+                  key: BACKEND_PORT
+          resources:
+            limits:
+              cpu: 300m
+              memory: 96Mi
+            requests:
+              cpu: 25m
+              memory: 32Mi
+          startupProbe:
+            httpGet: {path: /api/counter, port: http}
+            periodSeconds: 2
+            failureThreshold: 60
+          readinessProbe:
+            httpGet: {path: /api/counter, port: http}
+            periodSeconds: 3
+            timeoutSeconds: 1
+            failureThreshold: 1
+          livenessProbe:
+            httpGet: {path: /api/counter, port: http}
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 6
+---
+# Source: counter/templates/application.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: counter-frontend
+  annotations:
+    kubernetes.io/change-cause: "Initial installation"
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  minReadySeconds: 5
+  progressDeadlineSeconds: 120
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: counter-frontend
+  template:
+    metadata:
+      labels:
+        app: counter-frontend
+      annotations:
+        checksum/config: 5909c8880be8ea98fde4307b9c321adf67c7da20fb98aa45369e6cfd8c4e7b6e
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: frontend
+          image: "counter-frontend:hw4-v1"
+          imagePullPolicy: Never
+          lifecycle:
+            preStop:
+              exec:
+                command: [sh, -c, "sleep 10"]
+          ports:
+            - {name: http, containerPort: 8080}
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: counter-config
+                  key: FRONTEND_PORT
+          resources:
+            limits:
+              cpu: 400m
+              memory: 256Mi
+            requests:
+              cpu: 25m
+              memory: 64Mi
+          startupProbe:
+            httpGet: {path: /, port: http}
+            periodSeconds: 2
+            failureThreshold: 60
+          readinessProbe:
+            httpGet: {path: /, port: http}
+            periodSeconds: 3
+            timeoutSeconds: 1
+            failureThreshold: 1
+          livenessProbe:
+            httpGet: {path: /, port: http}
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 6
+---
+# Source: counter/templates/database.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: counter-postgres
+spec:
+  serviceName: counter-postgres
+  replicas: 1
+  selector:
+    matchLabels: {app: counter-postgres}
+  template:
+    metadata:
+      labels: {app: counter-postgres}
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - {name: postgres, containerPort: 5432}
+          env:
+            - {name: POSTGRES_USER, value: counter}
+            - {name: POSTGRES_DB, value: counter}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef: {name: postgres-auth, key: password}
+            - {name: PGDATA, value: /var/lib/postgresql/data/pgdata}
+          resources:
+            limits:
+              cpu: 300m
+              memory: 192Mi
+            requests:
+              cpu: 25m
+              memory: 64Mi
+          startupProbe:
+            exec: {command: [pg_isready, -U, counter, -d, counter]}
+            periodSeconds: 2
+            failureThreshold: 60
+          readinessProbe:
+            exec: {command: [pg_isready, -U, counter, -d, counter]}
+            periodSeconds: 5
+          livenessProbe:
+            exec: {command: [pg_isready, -U, counter, -d, counter]}
+            periodSeconds: 10
+          volumeMounts:
+            - {name: data, mountPath: /var/lib/postgresql/data}
+            - {name: init, mountPath: /docker-entrypoint-initdb.d, readOnly: true}
+      volumes:
+        - name: data
+          persistentVolumeClaim: {claimName: counter-postgres-data}
+        - name: init
+          configMap: {name: counter-postgres-init}
+---
+# Source: counter/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: counter
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts: ["counter.localtest.me"]
+      secretName: counter-tls
+  rules:
+    - host: "counter.localtest.me"
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: counter-backend
+                port: {name: http}
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: counter-frontend
+                port: {name: http}
+---
+# Source: counter/templates/check.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: counter-check
+  annotations:
+    helm.sh/hook: post-install,post-upgrade,post-rollback
+    helm.sh/hook-delete-policy: before-hook-creation
+spec:
+  backoffLimit: 2
+  activeDeadlineSeconds: 120
+  template:
+    spec:
+      automountServiceAccountToken: false
+      restartPolicy: Never
+      containers:
+        - name: check
+          image: "counter-backend:hw4-v1"
+          imagePullPolicy: Never
+          resources:
+            limits:
+              cpu: 100m
+              memory: 64Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+          command: [python, -u, -c]
+          args:
+            - |
+              import urllib.request
+              for url in ['http://counter-frontend:8080/', 'http://counter-backend:9000/api/counter']:
+                  with urllib.request.urlopen(url, timeout=15) as r:
+                      print(url, r.status)
+                      assert r.status == 200

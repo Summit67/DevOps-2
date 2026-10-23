@@ -1,0 +1,15 @@
+{"count": 4}
+{"count": 1}
+{"count": 5}
+{"count": 2}
+{"count": 6}
+{"count": 3}
+{"count": 7}
+{"count": 4}
+{"count": 8}
+pod/counter-backend-546d98d9dc-2qc9r
+{"count": 8}
+pod/counter-backend-546d98d9dc-6ztl8
+{"count": 4}
+pod/counter-backend-546d98d9dc-dcvpp
+{"count": 0}

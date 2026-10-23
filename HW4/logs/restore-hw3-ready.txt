@@ -1,0 +1,16 @@
+k3d-hw4-serverlb: Up 4 hours
+k3d-hw4-server-0: Up 4 hours
+hw3-monitoring-grafana-1: Up 4 hours
+hw3-monitoring-prometheus-1: Up 4 hours
+hw3-monitoring-node-exporter-1: Up 4 hours
+nginx-letsencrypt: Up 4 hours
+{
+  "database": "ok",
+  "version": "12.1.0",
+  "commit": "ccd7b6ce7ea6184b8c7eb1de044174147dd9a648"
+}Prometheus Server is Ready.
+               total        used        free      shared  buff/cache   available
+Mem:           3.3Gi       2.0Gi       101Mi        17Mi       1.5Gi       1.3Gi
+Swap:          3.3Gi       833Mi       2.5Gi
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2        20G   17G  2.2G  89% /

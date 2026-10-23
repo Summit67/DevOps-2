@@ -1,0 +1,17 @@
+Release "counter" has been upgraded. Happy Helming!
+NAME: counter
+LAST DEPLOYED: Fri Oct 23 19:03:48 2026
+NAMESPACE: hw4
+STATUS: deployed
+REVISION: 4
+TEST SUITE: None
+HTTP responses: {'200': 165}
+http://counter-frontend:8080/ 200
+http://counter-backend:9000/api/counter 200
+deployment.apps/counter-backend 
+REVISION  CHANGE-CAUSE
+1         Initial installation
+2         Backend image hw4-v2
+3         Graceful shutdown: preStop 10 seconds
+4         Backend image hw4-v2
+

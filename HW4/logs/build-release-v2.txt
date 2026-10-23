@@ -1,0 +1,28 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 86B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/counter-backend:hw4-v1
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/1] FROM docker.io/library/counter-backend:hw4-v1@sha256:488ddeb7eafdab0247f7defe21f3290ff007a071f949fce440a7c525d552dea1
+#4 resolve docker.io/library/counter-backend:hw4-v1@sha256:488ddeb7eafdab0247f7defe21f3290ff007a071f949fce440a7c525d552dea1 done
+#4 DONE 0.0s
+
+#5 exporting to image
+#5 exporting layers done
+#5 exporting manifest sha256:0645cfb1074fd67ec8c7b176deb703a4f828aab7cb5296f0d23d421418946977 done
+#5 exporting config sha256:0811d265dccdf35af87a9fdae7c9042b309bc2a9ee2a7f7202c8879a0d33c843 done
+#5 exporting attestation manifest sha256:df19b8c3abd40ce5ea1a8393e5cf9d05d31eea26e7710142722ebc31a4b8902e done
+#5 exporting manifest list sha256:353518c9f44024c783cb03ff5093423f390510bd3b3748ac0579d0b940945feb
+#5 exporting manifest list sha256:353518c9f44024c783cb03ff5093423f390510bd3b3748ac0579d0b940945feb done
+#5 naming to docker.io/library/counter-backend:hw4-v2 done
+#5 unpacking to docker.io/library/counter-backend:hw4-v2 done
+#5 DONE 0.0s
+unpacking docker.io/library/counter-backend:hw4-v2 (sha256:353518c9f44024c783cb03ff5093423f390510bd3b3748ac0579d0b940945feb)...done

@@ -1,0 +1,6 @@
+job.batch/manual-evening created
+job.batch/manual-evening condition met
+counter-frontend replicas = 1
+deployment "counter-frontend" successfully rolled out
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+counter-frontend   1/1     1            1           12m

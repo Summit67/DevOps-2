@@ -1,0 +1,81 @@
+{{- if .Values.database.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-postgres-init
+data:
+  init.sql: |
+    CREATE TABLE visits (id integer PRIMARY KEY, note text NOT NULL);
+    INSERT INTO visits VALUES (1, 'created by init.sql');
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-postgres
+spec:
+  clusterIP: None
+  selector:
+    app: {{ .Release.Name }}-postgres
+  ports:
+    - {name: postgres, port: 5432, targetPort: postgres}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-postgres-data
+  annotations:
+    helm.sh/resource-policy: keep
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: {{ .Values.database.storageClass }}
+  resources:
+    requests:
+      storage: {{ .Values.database.storage }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-postgres
+spec:
+  serviceName: {{ .Release.Name }}-postgres
+  replicas: 1
+  selector:
+    matchLabels: {app: {{ .Release.Name }}-postgres}
+  template:
+    metadata:
+      labels: {app: {{ .Release.Name }}-postgres}
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: postgres
+          image: {{ .Values.database.image }}
+          ports:
+            - {name: postgres, containerPort: 5432}
+          env:
+            - {name: POSTGRES_USER, value: counter}
+            - {name: POSTGRES_DB, value: counter}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef: {name: {{ .Values.database.existingSecret }}, key: password}
+            - {name: PGDATA, value: /var/lib/postgresql/data/pgdata}
+          resources:
+            {{- toYaml .Values.database.resources | nindent 12 }}
+          startupProbe:
+            exec: {command: [pg_isready, -U, counter, -d, counter]}
+            periodSeconds: 2
+            failureThreshold: 60
+          readinessProbe:
+            exec: {command: [pg_isready, -U, counter, -d, counter]}
+            periodSeconds: 5
+          livenessProbe:
+            exec: {command: [pg_isready, -U, counter, -d, counter]}
+            periodSeconds: 10
+          volumeMounts:
+            - {name: data, mountPath: /var/lib/postgresql/data}
+            - {name: init, mountPath: /docker-entrypoint-initdb.d, readOnly: true}
+      volumes:
+        - name: data
+          persistentVolumeClaim: {claimName: {{ .Release.Name }}-postgres-data}
+        - name: init
+          configMap: {name: {{ .Release.Name }}-postgres-init}
+{{- end }}

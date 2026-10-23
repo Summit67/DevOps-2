@@ -1,0 +1,4 @@
+hw3-monitoring-grafana-1
+hw3-monitoring-prometheus-1
+hw3-monitoring-node-exporter-1
+curl: (56) Recv failure: Connection reset by peer

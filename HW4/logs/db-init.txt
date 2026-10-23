@@ -1,0 +1,31 @@
+
+
+/usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/init.sql
+CREATE TABLE
+INSERT 0 1
+
+
+2026-10-23 15:55:05.841 UTC [47] LOG:  received fast shutdown request
+waiting for server to shut down....2026-10-23 15:55:05.842 UTC [47] LOG:  aborting any active transactions
+2026-10-23 15:55:05.846 UTC [47] LOG:  background worker "logical replication launcher" (PID 53) exited with exit code 1
+2026-10-23 15:55:05.847 UTC [48] LOG:  shutting down
+2026-10-23 15:55:05.853 UTC [48] LOG:  checkpoint starting: shutdown immediate
+2026-10-23 15:55:05.950 UTC [48] LOG:  checkpoint complete: wrote 929 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.094 s, sync=0.002 s, total=0.103 s; sync files=305, longest=0.001 s, average=0.001 s; distance=4296 kB, estimate=4296 kB; lsn=0/1929490, redo lsn=0/1929490
+2026-10-23 15:55:05.954 UTC [47] LOG:  database system is shut down
+ done
+server stopped
+
+PostgreSQL init process complete; ready for start up.
+
+2026-10-23 15:55:06.057 UTC [1] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+2026-10-23 15:55:06.057 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-10-23 15:55:06.057 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2026-10-23 15:55:06.058 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-10-23 15:55:06.061 UTC [65] LOG:  database system was shut down at 2026-10-23 15:55:05 UTC
+2026-10-23 15:55:06.064 UTC [1] LOG:  database system is ready to accept connections
+ id |        note         
+----+---------------------
+  1 | created by init.sql
+(1 row)
+
+INSERT 0 1

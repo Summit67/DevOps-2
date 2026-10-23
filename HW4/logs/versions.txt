@@ -1,0 +1,6 @@
+k3d version v5.9.0
+k3s version v1.35.5-k3s1 (default)
+Client Version: v1.35.5
+Kustomize Version: v5.7.1
+v3.19.0+g3d8990f
+Linux 7.0.0-38-generic

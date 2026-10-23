@@ -1,0 +1,23 @@
+# Зависимости
+/node_modules
+
+# Next.js: сборка и кэш
+/.next/
+/out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Собранный сервер и архив для установки
+/dist
+*.tar.gz
+
+# Локальные переменные окружения
+.env*.local
+
+# Логи npm
+npm-debug.log*
+
+# CI
+/.cache
+.gitlab-ci-local*
+eslint.codequality.json

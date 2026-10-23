@@ -1,0 +1,6 @@
+ id |           note            
+----+---------------------------
+  1 | created by init.sql
+  2 | saved before pod deletion
+(2 rows)
+

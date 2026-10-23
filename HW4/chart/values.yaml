@@ -1,0 +1,35 @@
+host: counter.localtest.me
+ingressClass: traefik
+changeCause: Initial installation
+tls:
+  create: false
+  existingSecret: counter-tls
+  crt: ""
+  key: ""
+backend:
+  image: counter-backend:hw4-v1
+  replicas: 1
+  port: 9000
+  resources:
+    requests: {cpu: 25m, memory: 32Mi}
+    limits: {cpu: 300m, memory: 96Mi}
+frontend:
+  image: counter-frontend:hw4-v1
+  replicas: 1
+  port: 8080
+  resources:
+    requests: {cpu: 25m, memory: 64Mi}
+    limits: {cpu: 400m, memory: 256Mi}
+hook:
+  resources:
+    requests: {cpu: 10m, memory: 16Mi}
+    limits: {cpu: 100m, memory: 64Mi}
+database:
+  enabled: false
+  image: postgres:16-alpine
+  existingSecret: postgres-auth
+  storage: 256Mi
+  storageClass: local-path
+  resources:
+    requests: {cpu: 25m, memory: 64Mi}
+    limits: {cpu: 300m, memory: 192Mi}

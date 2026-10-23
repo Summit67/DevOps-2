@@ -1,0 +1,3 @@
+hw3-monitoring-grafana-1
+hw3-monitoring-prometheus-1
+hw3-monitoring-node-exporter-1
