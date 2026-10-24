@@ -1,0 +1,8 @@
+*
+!Dockerfile
+!pyproject.toml
+!poetry.lock
+!README.md
+!src
+!src/**
+**/__pycache__

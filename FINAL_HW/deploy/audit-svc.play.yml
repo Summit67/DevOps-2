@@ -1,0 +1,207 @@
+---
+- name: Deploy audit-svc
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Create backend network
+      community.docker.docker_network:
+        name: audit-backend
+        internal: true
+
+    - name: Create edge network
+      community.docker.docker_network:
+        name: audit-edge
+
+    - name: Create PostgreSQL volume
+      community.docker.docker_volume:
+        name: audit-postgres-data
+
+    - name: Create configuration directories
+      ansible.builtin.file:
+        path: "{{ audit_root }}/{{ item }}"
+        state: directory
+        owner: root
+        group: "{{ audit_gid }}"
+        mode: '0750'
+      loop: [config, nginx, postgres]
+
+    - name: Write PostgreSQL superuser password
+      ansible.builtin.copy:
+        content: "{{ vault_postgres_password }}"
+        dest: "{{ audit_root }}/postgres/password"
+        owner: root
+        group: root
+        mode: '0400'
+      no_log: true
+
+    - name: Start PostgreSQL 17
+      community.docker.docker_container:
+        name: audit-postgres
+        image: postgres:17
+        state: started
+        restart_policy: unless-stopped
+        memory: 384M
+        env:
+          POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+        volumes:
+          - audit-postgres-data:/var/lib/postgresql/data
+          - "{{ audit_root }}/postgres/password:/run/secrets/postgres-password:ro"
+        networks:
+          - name: audit-backend
+        published_ports: []
+
+    - name: Get PostgreSQL container address
+      community.docker.docker_container_info:
+        name: audit-postgres
+      register: postgres_info
+
+    - name: Wait for PostgreSQL
+      community.postgresql.postgresql_ping:
+        login_host: "{{ postgres_info.container.NetworkSettings.Networks['audit-backend'].IPAddress }}"
+        login_user: postgres
+        login_password: "{{ vault_postgres_password }}"
+        login_db: postgres
+      register: postgres_ready
+      until: postgres_ready.is_available
+      retries: 30
+      delay: 2
+      no_log: true
+
+    - name: Create or update audit_svc database user
+      community.postgresql.postgresql_user:
+        login_host: "{{ postgres_info.container.NetworkSettings.Networks['audit-backend'].IPAddress }}"
+        login_user: postgres
+        login_password: "{{ vault_postgres_password }}"
+        login_db: postgres
+        name: audit_svc
+        password: "{{ vault_audit_password }}"
+        role_attr_flags: LOGIN,NOSUPERUSER,NOCREATEDB,NOCREATEROLE
+      no_log: true
+
+    - name: Create audit database owned by audit_svc
+      community.postgresql.postgresql_db:
+        login_host: "{{ postgres_info.container.NetworkSettings.Networks['audit-backend'].IPAddress }}"
+        login_user: postgres
+        login_password: "{{ vault_postgres_password }}"
+        name: audit
+        owner: audit_svc
+      no_log: true
+
+    - name: Write application configuration
+      ansible.builtin.template:
+        src: config.yaml.j2
+        dest: "{{ audit_root }}/config/config.yaml"
+        owner: root
+        group: "{{ audit_gid }}"
+        mode: '0640'
+      no_log: true
+      notify: Reload application configuration
+
+    - name: Pull release image
+      community.docker.docker_image_pull:
+        name: "{{ audit_image_repository }}:{{ audit_image_tag }}"
+      become: false
+
+    - name: Get release image ID
+      community.docker.docker_image_info:
+        name: "{{ audit_image_repository }}:{{ audit_image_tag }}"
+      register: audit_image_info
+
+    - name: Apply database migrations before updating application
+      ansible.builtin.command:
+        argv:
+          - docker
+          - run
+          - --rm
+          - --network
+          - audit-backend
+          - --volume
+          - "{{ audit_root }}/config:/etc/audit-svc:ro"
+          - --entrypoint
+          - migrate
+          - "{{ audit_image_info.images[0].Id }}"
+      register: migration
+      changed_when: "migration.stderr is search('done: [1-9][0-9]* applied')"
+
+    - name: Show migration result
+      ansible.builtin.debug:
+        var: migration.stderr_lines
+
+    - name: Start audit-svc from release image
+      community.docker.docker_container:
+        name: audit-svc
+        image: "{{ audit_image_info.images[0].Id }}"
+        state: started
+        restart_policy: unless-stopped
+        memory: 128M
+        volumes:
+          - "{{ audit_root }}/config:/etc/audit-svc:ro"
+        networks:
+          - name: audit-backend
+        published_ports: []
+
+    - name: Write Nginx configuration
+      ansible.builtin.template:
+        src: nginx.conf.j2
+        dest: "{{ audit_root }}/nginx/nginx.conf"
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Reload Nginx
+
+    - name: Start Nginx
+      community.docker.docker_container:
+        name: audit-nginx
+        image: nginx:1.28-alpine
+        state: started
+        restart_policy: unless-stopped
+        memory: 64M
+        volumes:
+          - "{{ audit_root }}/nginx:/etc/nginx:ro"
+        networks:
+          - name: audit-backend
+          - name: audit-edge
+        published_ports:
+          - "127.0.0.1:{{ audit_http_port }}:8080"
+
+    - name: Start Nginx exporter
+      community.docker.docker_container:
+        name: audit-nginx-exporter
+        image: nginx/nginx-prometheus-exporter:1.4
+        state: started
+        restart_policy: unless-stopped
+        memory: 64M
+        command: [-nginx.scrape-uri=http://audit-nginx:8081/stub_status]
+        networks:
+          - name: audit-edge
+        published_ports:
+          - 127.0.0.1:9113:9113
+
+    - name: Apply configuration handlers
+      ansible.builtin.meta: flush_handlers
+
+    - name: Check application through Nginx
+      ansible.builtin.uri:
+        url: "http://127.0.0.1:{{ audit_http_port }}/healthz"
+        status_code: 200
+      register: health
+      until: health.status == 200
+      retries: 15
+      delay: 2
+
+  handlers:
+    - name: Reload application configuration
+      ansible.builtin.command:
+        argv:
+          - docker
+          - exec
+          - audit-svc
+          - python
+          - -c
+          - "import urllib.request; print(urllib.request.urlopen(urllib.request.Request('http://127.0.0.1:8080/reload', data=b'', method='POST')).read().decode())"
+      register: reload_result
+      changed_when: "(reload_result.stdout | from_json).changed"
+
+    - name: Reload Nginx
+      ansible.builtin.command: docker exec audit-nginx nginx -s reload

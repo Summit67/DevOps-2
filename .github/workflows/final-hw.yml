@@ -1,0 +1,122 @@
+name: FINAL_HW audit-svc
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+    paths:
+      - 'FINAL_HW/src/**'
+      - 'FINAL_HW/tests/**'
+      - 'FINAL_HW/pyproject.toml'
+      - 'FINAL_HW/poetry.lock'
+      - 'FINAL_HW/Dockerfile'
+      - 'FINAL_HW/.dockerignore'
+      - 'FINAL_HW/deploy/**'
+      - '.github/workflows/final-hw.yml'
+permissions:
+  contents: read
+concurrency:
+  group: final-hw-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Poetry and tests
+        working-directory: FINAL_HW
+        run: |
+          pip install poetry==2.5.1
+          poetry install --no-interaction
+          poetry run pytest --junitxml=test-results.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: junit
+          path: FINAL_HW/test-results.xml
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Select image tag
+        id: image
+        env:
+          REF_TYPE: ${{ github.ref_type }}
+          REF_NAME: ${{ github.ref_name }}
+          PROTECTED: ${{ github.ref_protected }}
+        run: |
+          if [ "$REF_TYPE" = tag ]; then
+            [[ "$REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+            test "$PROTECTED" = true
+            echo "tag=$REF_NAME" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=main_${GITHUB_SHA:0:7}" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and publish
+        uses: docker/build-push-action@v6
+        env:
+          SOURCE_DATE_EPOCH: '1700000000'
+        with:
+          context: FINAL_HW
+          push: true
+          tags: ghcr.io/summit67/audit-svc:${{ steps.image.outputs.tag }}
+          provenance: false
+          sbom: false
+          build-args: SOURCE_DATE_EPOCH=1700000000
+          outputs: type=image,rewrite-timestamp=true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+  deploy:
+    needs: publish
+    if: github.ref_type == 'tag' && github.ref_protected && github.repository == 'Summit67/DevOps-2'
+    runs-on: [self-hosted, Linux, X64, deploy]
+    environment:
+      name: final-hw
+      url: http://localhost:8088
+    permissions:
+      contents: read
+      packages: read
+    concurrency:
+      group: audit-svc-deploy
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Registry login
+        env:
+          REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: printf '%s' "$REGISTRY_TOKEN" | docker login ghcr.io -u '${{ github.actor }}' --password-stdin
+      - name: Deploy with Ansible
+        working-directory: FINAL_HW/deploy
+        env:
+          ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          set -o pipefail
+          chmod +x vault-pass.sh
+          ansible-playbook audit-svc.play.yml --vault-password-file ./vault-pass.sh -e "audit_image_tag=$RELEASE_TAG" | tee deploy.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deploy-log
+          path: FINAL_HW/deploy/deploy.log
+      - name: Registry logout
+        if: always()
+        run: docker logout ghcr.io

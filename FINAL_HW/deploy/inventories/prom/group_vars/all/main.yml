@@ -1,0 +1,5 @@
+audit_image_repository: ghcr.io/summit67/audit-svc
+audit_root: /data/audit-svc
+audit_uid: 10001
+audit_gid: 10001
+audit_http_port: 8088
