@@ -1,0 +1,75 @@
+PLAY [Deploy audit-svc] ********************************************************
+
+TASK [Create backend network] **************************************************
+ok: [vm1]
+
+TASK [Create edge network] *****************************************************
+ok: [vm1]
+
+TASK [Create PostgreSQL volume] ************************************************
+ok: [vm1]
+
+TASK [Create configuration directories] ****************************************
+ok: [vm1] => (item=config)
+ok: [vm1] => (item=nginx)
+ok: [vm1] => (item=postgres)
+
+TASK [Write PostgreSQL superuser password] *************************************
+ok: [vm1]
+
+TASK [Start PostgreSQL 17] *****************************************************
+ok: [vm1]
+
+TASK [Get PostgreSQL container address] ****************************************
+ok: [vm1]
+
+TASK [Wait for PostgreSQL] *****************************************************
+ok: [vm1]
+
+TASK [Create or update audit_svc database user] ********************************
+changed: [vm1]
+
+TASK [Create audit database owned by audit_svc] ********************************
+ok: [vm1]
+
+TASK [Write application configuration] *****************************************
+changed: [vm1]
+
+TASK [Pull release image] ******************************************************
+changed: [vm1]
+
+TASK [Get release image ID] ****************************************************
+ok: [vm1]
+
+TASK [Apply database migrations before updating application] *******************
+ok: [vm1]
+
+TASK [Show migration result] ***************************************************
+ok: [vm1] => {
+    "migration.stderr_lines": [
+        "[INFO] done: 0 applied, 2 already in place"
+    ]
+}
+
+TASK [Start audit-svc from release image] **************************************
+ok: [vm1]
+
+TASK [Write Nginx configuration] ***********************************************
+ok: [vm1]
+
+TASK [Start Nginx] *************************************************************
+ok: [vm1]
+
+TASK [Start Nginx exporter] ****************************************************
+ok: [vm1]
+
+TASK [Apply configuration handlers] ********************************************
+
+RUNNING HANDLER [Reload application configuration] *****************************
+changed: [vm1]
+
+TASK [Check application through Nginx] *****************************************
+ok: [vm1]
+
+PLAY RECAP *********************************************************************
+vm1                        : ok=21   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0

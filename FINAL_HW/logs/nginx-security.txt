@@ -1,0 +1,35 @@
+Health
+{"status": "ok"}
+HTTP 200
+Reload log count before
+1
+/reload 404
+/reload?x=1 404
+//reload 404
+/%72eload 404
+Reload log count after
+1
+stub_status on main port
+404
+Exporter
+nginx_up 1
+Container ports
+audit-load	8080/tcp
+audit-nginx-exporter	127.0.0.1:9113->9113/tcp
+audit-nginx	80/tcp, 127.0.0.1:8088->8080/tcp
+audit-svc	8080/tcp
+audit-postgres	5432/tcp
+Application UID
+uid=10001(audit) gid=10001(audit) groups=10001(audit)
+Config permissions
+640 root:UNKNOWN /data/audit-svc/config/config.yaml
+Vault header
+$ANSIBLE_VAULT;1.1;AES256
+Database owner
+ datname |   owner   
+---------+-----------
+ audit   | audit_svc
+(1 row)
+
+Volume
+audit-postgres-data /var/lib/docker/volumes/audit-postgres-data/_data

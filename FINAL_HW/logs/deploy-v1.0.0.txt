@@ -1,0 +1,80 @@
+PLAY [Deploy audit-svc] ********************************************************
+
+TASK [Create backend network] **************************************************
+changed: [vm1]
+
+TASK [Create edge network] *****************************************************
+changed: [vm1]
+
+TASK [Create PostgreSQL volume] ************************************************
+changed: [vm1]
+
+TASK [Create configuration directories] ****************************************
+changed: [vm1] => (item=config)
+changed: [vm1] => (item=nginx)
+changed: [vm1] => (item=postgres)
+
+TASK [Write PostgreSQL superuser password] *************************************
+changed: [vm1]
+
+TASK [Start PostgreSQL 17] *****************************************************
+changed: [vm1]
+
+TASK [Get PostgreSQL container address] ****************************************
+ok: [vm1]
+
+TASK [Wait for PostgreSQL] *****************************************************
+ok: [vm1]
+
+TASK [Create or update audit_svc database user] ********************************
+changed: [vm1]
+
+TASK [Create audit database owned by audit_svc] ********************************
+changed: [vm1]
+
+TASK [Write application configuration] *****************************************
+changed: [vm1]
+
+TASK [Pull release image] ******************************************************
+changed: [vm1]
+
+TASK [Get release image ID] ****************************************************
+ok: [vm1]
+
+TASK [Apply database migrations before updating application] *******************
+changed: [vm1]
+
+TASK [Show migration result] ***************************************************
+ok: [vm1] => {
+    "migration.stderr_lines": [
+        "[INFO] applying 0001_create_events",
+        "[INFO] applying 0002_events_app_index",
+        "[INFO] done: 2 applied, 0 already in place"
+    ]
+}
+
+TASK [Start audit-svc from release image] **************************************
+changed: [vm1]
+
+TASK [Write Nginx configuration] ***********************************************
+changed: [vm1]
+
+TASK [Start Nginx] *************************************************************
+changed: [vm1]
+
+TASK [Start Nginx exporter] ****************************************************
+changed: [vm1]
+
+TASK [Apply configuration handlers] ********************************************
+
+RUNNING HANDLER [Reload application configuration] *****************************
+ok: [vm1]
+
+RUNNING HANDLER [Reload Nginx] *************************************************
+changed: [vm1]
+
+TASK [Check application through Nginx] *****************************************
+ok: [vm1]
+
+PLAY RECAP *********************************************************************
+vm1                        : ok=22   changed=16   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0

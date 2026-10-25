@@ -1,0 +1,425 @@
+﻿2026-10-24T17:09:20.4948480Z Current runner version: '2.338.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20261021.618
+Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+Build Date: 2026-10-21T00:45:21Z
+Worker ID: {fb5de1c0-5c54-493c-8301-fe0e1bc7b6b0}
+Region: westus2
+Cloud: Azure
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.5
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20261012.334.1
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: Actions
+Cache mode: write
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+Complete job name: test
+##[group]Run actions/checkout@v4
+with:
+  persist-credentials: false
+  repository: Summit67/DevOps-2
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+##[endgroup]
+Syncing repository: Summit67/DevOps-2
+##[group]Getting Git version info
+Working directory is '/home/runner/work/DevOps-2/DevOps-2'
+[command]/usr/bin/git version
+git version 2.55.0
+##[endgroup]
+Temporarily overriding HOME='/home/runner/work/_temp/beba29f8-3296-47b0-809a-a1708591f092' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/DevOps-2/DevOps-2
+Deleting the contents of '/home/runner/work/DevOps-2/DevOps-2'
+##[group]Initializing the repository
+[command]/usr/bin/git init /home/runner/work/DevOps-2/DevOps-2
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/runner/work/DevOps-2/DevOps-2/.git/
+[command]/usr/bin/git remote add origin https://github.com/Summit67/DevOps-2
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +f2bd75248ed33d88fae01a243dd0d83127f1cdee:refs/remotes/origin/main
+From https://github.com/Summit67/DevOps-2
+ * [new ref]         f2bd75248ed33d88fae01a243dd0d83127f1cdee -> origin/main
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+Switched to a new branch 'main'
+branch 'main' set up to track 'origin/main'.
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+f2bd75248ed33d88fae01a243dd0d83127f1cdee
+##[group]Removing auth
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+http.https://github.com/.extraheader
+[command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+##[endgroup]
+##[group]Run actions/setup-python@v5
+with:
+  python-version: 3.11
+  check-latest: false
+  token: ***
+  update-environment: true
+  allow-prereleases: false
+  freethreaded: false
+##[endgroup]
+##[group]Installed versions
+(node:2662) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Successfully set up CPython (3.11.17)
+##[endgroup]
+##[group]Run pip install poetry==2.5.1
+pip install poetry==2.5.1
+poetry install --no-interaction
+poetry run pytest --junitxml=test-results.xml
+shell: /usr/bin/bash -e {0}
+env:
+  pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+##[endgroup]
+Collecting poetry==2.5.1
+  Downloading poetry-2.5.1-py3-none-any.whl.metadata (7.6 kB)
+Collecting build<2.0.0,>=1.2.1 (from poetry==2.5.1)
+  Downloading build-1.6.1-py3-none-any.whl.metadata (5.6 kB)
+Collecting cachecontrol<0.15.0,>=0.14.0 (from cachecontrol[filecache]<0.15.0,>=0.14.0->poetry==2.5.1)
+  Downloading cachecontrol-0.14.4-py3-none-any.whl.metadata (3.1 kB)
+Collecting cleo<3.0.0,>=2.1.0 (from poetry==2.5.1)
+  Downloading cleo-2.1.0-py3-none-any.whl.metadata (12 kB)
+Collecting dulwich<2,>=0.25.0 (from poetry==2.5.1)
+  Downloading dulwich-1.2.19-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (6.1 kB)
+Collecting fastjsonschema<3.0.0,>=2.18.0 (from poetry==2.5.1)
+  Downloading fastjsonschema-2.22.2-py3-none-any.whl.metadata (2.1 kB)
+Collecting findpython<0.9.0,>=0.6.2 (from poetry==2.5.1)
+  Downloading findpython-0.8.0-py3-none-any.whl.metadata (5.4 kB)
+Collecting installer<2.0.0,>=0.7.0 (from poetry==2.5.1)
+  Downloading installer-1.1.0-py3-none-any.whl.metadata (1.3 kB)
+Collecting keyring<26.0.0,>=25.1.0 (from poetry==2.5.1)
+  Downloading keyring-25.7.0-py3-none-any.whl.metadata (21 kB)
+Collecting packaging>=24.2 (from poetry==2.5.1)
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting pbs-installer>=2025.6.10 (from pbs-installer[download,install]>=2025.6.10->poetry==2.5.1)
+  Downloading pbs_installer-2026.10.21-py3-none-any.whl.metadata (1.2 kB)
+Collecting pkginfo<2.0,>=1.12 (from poetry==2.5.1)
+  Downloading pkginfo-1.13.3-py3-none-any.whl.metadata (14 kB)
+Collecting platformdirs<5,>=3.0.0 (from poetry==2.5.1)
+  Downloading platformdirs-4.13.5-py3-none-any.whl.metadata (5.5 kB)
+Collecting poetry-core==2.5.0 (from poetry==2.5.1)
+  Downloading poetry_core-2.5.0-py3-none-any.whl.metadata (3.8 kB)
+Collecting pyproject-hooks<2.0.0,>=1.0.0 (from poetry==2.5.1)
+  Downloading pyproject_hooks-1.3.3-py3-none-any.whl.metadata (1.3 kB)
+Collecting requests<3.0,>=2.26 (from poetry==2.5.1)
+  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting requests-toolbelt<2.0.0,>=1.0.0 (from poetry==2.5.1)
+  Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl.metadata (14 kB)
+Collecting shellingham<2.0,>=1.5 (from poetry==2.5.1)
+  Downloading shellingham-1.5.4-py2.py3-none-any.whl.metadata (3.5 kB)
+Collecting tomlkit<1.0.0,>=0.11.4 (from poetry==2.5.1)
+  Downloading tomlkit-0.15.2-py3-none-any.whl.metadata (3.4 kB)
+Collecting trove-classifiers>=2022.5.19 (from poetry==2.5.1)
+  Downloading trove_classifiers-2026.9.21.13-py3-none-any.whl.metadata (2.4 kB)
+Collecting virtualenv>=20.26.6 (from poetry==2.5.1)
+  Downloading virtualenv-21.14.13-py3-none-any.whl.metadata (4.1 kB)
+Collecting msgpack<2.0.0,>=0.5.2 (from cachecontrol<0.15.0,>=0.14.0->cachecontrol[filecache]<0.15.0,>=0.14.0->poetry==2.5.1)
+  Downloading msgpack-1.2.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (8.3 kB)
+Collecting filelock>=3.8.0 (from cachecontrol[filecache]<0.15.0,>=0.14.0->poetry==2.5.1)
+  Downloading filelock-4.2.4-py3-none-any.whl.metadata (2.0 kB)
+Collecting crashtest<0.5.0,>=0.4.1 (from cleo<3.0.0,>=2.1.0->poetry==2.5.1)
+  Downloading crashtest-0.4.1-py3-none-any.whl.metadata (1.1 kB)
+Collecting rapidfuzz<4.0.0,>=3.0.0 (from cleo<3.0.0,>=2.1.0->poetry==2.5.1)
+  Downloading rapidfuzz-3.14.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (12 kB)
+Collecting urllib3>=2.2.2 (from dulwich<2,>=0.25.0->poetry==2.5.1)
+  Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+Collecting typing_extensions>=4.6.0 (from dulwich<2,>=0.25.0->poetry==2.5.1)
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting SecretStorage>=3.2 (from keyring<26.0.0,>=25.1.0->poetry==2.5.1)
+  Downloading secretstorage-3.5.0-py3-none-any.whl.metadata (4.0 kB)
+Collecting jeepney>=0.4.2 (from keyring<26.0.0,>=25.1.0->poetry==2.5.1)
+  Downloading jeepney-0.9.0-py3-none-any.whl.metadata (1.2 kB)
+Collecting importlib_metadata>=4.11.4 (from keyring<26.0.0,>=25.1.0->poetry==2.5.1)
+  Downloading importlib_metadata-10.1.0-py3-none-any.whl.metadata (4.5 kB)
+Collecting jaraco.classes (from keyring<26.0.0,>=25.1.0->poetry==2.5.1)
+  Downloading jaraco.classes-3.4.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting jaraco.functools (from keyring<26.0.0,>=25.1.0->poetry==2.5.1)
+  Downloading jaraco_functools-4.6.0-py3-none-any.whl.metadata (2.9 kB)
+Collecting jaraco.context (from keyring<26.0.0,>=25.1.0->poetry==2.5.1)
+  Downloading jaraco_context-6.1.2-py3-none-any.whl.metadata (4.2 kB)
+Collecting charset_normalizer<4,>=2 (from requests<3.0,>=2.26->poetry==2.5.1)
+  Downloading charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (46 kB)
+Collecting idna<4,>=2.5 (from requests<3.0,>=2.26->poetry==2.5.1)
+  Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+Collecting certifi>=2023.5.7 (from requests<3.0,>=2.26->poetry==2.5.1)
+  Downloading certifi-2026.10.23-py3-none-any.whl.metadata (2.5 kB)
+Collecting zipp>=3.20 (from importlib_metadata>=4.11.4->keyring<26.0.0,>=25.1.0->poetry==2.5.1)
+  Downloading zipp-4.1.2-py3-none-any.whl.metadata (3.6 kB)
+Collecting httpx<1,>=0.27.0 (from pbs-installer[download,install]>=2025.6.10->poetry==2.5.1)
+  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting backports.zstd>=1.0.0 (from pbs-installer[download,install]>=2025.6.10->poetry==2.5.1)
+  Downloading backports_zstd-1.8.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (6.8 kB)
+Collecting anyio (from httpx<1,>=0.27.0->pbs-installer[download,install]>=2025.6.10->poetry==2.5.1)
+  Downloading anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+Collecting httpcore==1.* (from httpx<1,>=0.27.0->pbs-installer[download,install]>=2025.6.10->poetry==2.5.1)
+  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx<1,>=0.27.0->pbs-installer[download,install]>=2025.6.10->poetry==2.5.1)
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting cryptography>=2.0 (from SecretStorage>=3.2->keyring<26.0.0,>=25.1.0->poetry==2.5.1)
+  Downloading cryptography-50.0.2-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.4 kB)
+Collecting cffi>=2.0.0 (from cryptography>=2.0->SecretStorage>=3.2->keyring<26.0.0,>=25.1.0->poetry==2.5.1)
+  Downloading cffi-2.1.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+Collecting pycparser (from cffi>=2.0.0->cryptography>=2.0->SecretStorage>=3.2->keyring<26.0.0,>=25.1.0->poetry==2.5.1)
+  Downloading pycparser-3.12-py3-none-any.whl.metadata (9.7 kB)
+Collecting distlib<1,>=0.4.3 (from virtualenv>=20.26.6->poetry==2.5.1)
+  Downloading distlib-0.4.4-py2.py3-none-any.whl.metadata (5.3 kB)
+Collecting python-discovery>=1.6.1 (from virtualenv>=20.26.6->poetry==2.5.1)
+  Downloading python_discovery-1.6.4-py3-none-any.whl.metadata (5.1 kB)
+Collecting more-itertools (from jaraco.classes->keyring<26.0.0,>=25.1.0->poetry==2.5.1)
+  Downloading more_itertools-11.2.1-py3-none-any.whl.metadata (42 kB)
+Collecting backports.tarfile (from jaraco.context->keyring<26.0.0,>=25.1.0->poetry==2.5.1)
+  Downloading backports.tarfile-1.2.0-py3-none-any.whl.metadata (2.0 kB)
+Downloading poetry-2.5.1-py3-none-any.whl (307 kB)
+Downloading poetry_core-2.5.0-py3-none-any.whl (413 kB)
+Downloading build-1.6.1-py3-none-any.whl (31 kB)
+Downloading cachecontrol-0.14.4-py3-none-any.whl (22 kB)
+Downloading cleo-2.1.0-py3-none-any.whl (78 kB)
+Downloading crashtest-0.4.1-py3-none-any.whl (7.6 kB)
+Downloading dulwich-1.2.19-cp311-cp311-manylinux_2_28_x86_64.whl (1.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 67.9 MB/s  0:00:00
+Downloading fastjsonschema-2.22.2-py3-none-any.whl (27 kB)
+Downloading findpython-0.8.0-py3-none-any.whl (21 kB)
+Downloading installer-1.1.0-py3-none-any.whl (464 kB)
+Downloading keyring-25.7.0-py3-none-any.whl (39 kB)
+Downloading msgpack-1.2.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (477 kB)
+Downloading pkginfo-1.13.3-py3-none-any.whl (35 kB)
+Downloading platformdirs-4.13.5-py3-none-any.whl (32 kB)
+Downloading pyproject_hooks-1.3.3-py3-none-any.whl (10 kB)
+Downloading rapidfuzz-3.14.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (3.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.2/3.2 MB 198.9 MB/s  0:00:00
+Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+Downloading charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (269 kB)
+Downloading idna-3.20-py3-none-any.whl (69 kB)
+Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl (54 kB)
+Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+Downloading tomlkit-0.15.2-py3-none-any.whl (52 kB)
+Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)
+Downloading certifi-2026.10.23-py3-none-any.whl (135 kB)
+Downloading filelock-4.2.4-py3-none-any.whl (162 kB)
+Downloading importlib_metadata-10.1.0-py3-none-any.whl (32 kB)
+Downloading jeepney-0.9.0-py3-none-any.whl (49 kB)
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+Downloading pbs_installer-2026.10.21-py3-none-any.whl (86 kB)
+Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+Downloading backports_zstd-1.8.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (493 kB)
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading secretstorage-3.5.0-py3-none-any.whl (15 kB)
+Downloading cryptography-50.0.2-cp311-abi3-manylinux_2_34_x86_64.whl (4.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.8/4.8 MB 301.0 MB/s  0:00:00
+Downloading cffi-2.1.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (217 kB)
+Downloading trove_classifiers-2026.9.21.13-py3-none-any.whl (14 kB)
+Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Downloading virtualenv-21.14.13-py3-none-any.whl (5.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.6/5.6 MB 304.2 MB/s  0:00:00
+Downloading distlib-0.4.4-py2.py3-none-any.whl (472 kB)
+Downloading python_discovery-1.6.4-py3-none-any.whl (39 kB)
+Downloading zipp-4.1.2-py3-none-any.whl (10 kB)
+Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
+Downloading jaraco.classes-3.4.0-py3-none-any.whl (6.8 kB)
+Downloading jaraco_context-6.1.2-py3-none-any.whl (7.9 kB)
+Downloading backports.tarfile-1.2.0-py3-none-any.whl (30 kB)
+Downloading jaraco_functools-4.6.0-py3-none-any.whl (11 kB)
+Downloading more_itertools-11.2.1-py3-none-any.whl (74 kB)
+Downloading pycparser-3.12-py3-none-any.whl (62 kB)
+Installing collected packages: trove-classifiers, distlib, zipp, urllib3, typing_extensions, tomlkit, shellingham, rapidfuzz, pyproject-hooks, pycparser, poetry-core, platformdirs, pkginfo, pbs-installer, packaging, msgpack, more-itertools, jeepney, installer, idna, h11, filelock, fastjsonschema, crashtest, charset_normalizer, certifi, backports.zstd, backports.tarfile, requests, python-discovery, jaraco.functools, jaraco.context, jaraco.classes, importlib_metadata, httpcore, findpython, dulwich, cleo, cffi, build, anyio, virtualenv, requests-toolbelt, httpx, cryptography, cachecontrol, SecretStorage, keyring, poetry
+
+Successfully installed SecretStorage-3.5.0 anyio-4.15.1 backports.tarfile-1.2.0 backports.zstd-1.8.0 build-1.6.1 cachecontrol-0.14.4 certifi-2026.10.23 cffi-2.1.1 charset_normalizer-3.5.2 cleo-2.1.0 crashtest-0.4.1 cryptography-50.0.2 distlib-0.4.4 dulwich-1.2.19 fastjsonschema-2.22.2 filelock-4.2.4 findpython-0.8.0 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 idna-3.20 importlib_metadata-10.1.0 installer-1.1.0 jaraco.classes-3.4.0 jaraco.context-6.1.2 jaraco.functools-4.6.0 jeepney-0.9.0 keyring-25.7.0 more-itertools-11.2.1 msgpack-1.2.3 packaging-26.3 pbs-installer-2026.10.21 pkginfo-1.13.3 platformdirs-4.13.5 poetry-2.5.1 poetry-core-2.5.0 pycparser-3.12 pyproject-hooks-1.3.3 python-discovery-1.6.4 rapidfuzz-3.14.6 requests-2.34.2 requests-toolbelt-1.0.0 shellingham-1.5.4 tomlkit-0.15.2 trove-classifiers-2026.9.21.13 typing_extensions-4.16.0 urllib3-2.8.0 virtualenv-21.14.13 zipp-4.1.2
+
+[notice] A new release of pip is available: 26.2.1 -> 26.2.2
+[notice] To update, run: pip install --upgrade pip
+Creating virtualenv audit-svc-QSZI6i7o-py3.11 in /home/runner/.cache/pypoetry/virtualenvs
+Installing dependencies from lock file
+
+Package operations: 20 installs, 0 updates, 0 removals
+
+  - Installing aiohappyeyeballs (2.7.1)
+  - Installing aiohttp (3.14.4)
+  - Installing aiosignal (1.4.0)
+  - Installing asyncpg (0.30.0)
+  - Installing attrs (26.1.0)
+  - Installing frozenlist (1.8.0)
+  - Installing idna (3.20)
+  - Installing iniconfig (2.3.1)
+  - Installing multidict (6.9.1)
+  - Installing packaging (26.3)
+  - Installing pluggy (1.6.0)
+  - Installing prometheus-client (0.21.1)
+  - Installing propcache (0.5.4)
+  - Installing pygments (2.21.0)
+  - Installing pytest (8.4.2)
+  - Installing pytest-aiohttp (1.1.1)
+  - Installing pytest-asyncio (0.24.0)
+  - Installing pyyaml (6.0.3)
+  - Installing typing-extensions (4.16.0)
+  - Installing yarl (1.25.1)
+
+Installing the current project: audit-svc (0.1.0)
+============================= test session starts ==============================
+platform linux -- Python 3.11.17, pytest-8.4.2, pluggy-1.6.0
+rootdir: /home/runner/work/DevOps-2/DevOps-2/FINAL_HW
+configfile: pyproject.toml
+testpaths: tests
+plugins: aiohttp-1.1.1, asyncio-0.24.0
+asyncio: mode=Mode.AUTO, default_loop_scope=function
+collected 6 items
+
+tests/test_main.py::test_create_and_list_events 
+-------------------------------- live log call ---------------------------------
+INFO     aiohttp.access:web_log.py:229 127.0.0.1 [24/Oct/2026:17:09:33 +0000] "POST /api/events HTTP/1.1" 201 172 "-" "Python/3.11 aiohttp/3.14.4"
+INFO     aiohttp.access:web_log.py:229 127.0.0.1 [24/Oct/2026:17:09:33 +0000] "GET /api/events?app=billing HTTP/1.1" 200 260 "-" "Python/3.11 aiohttp/3.14.4"
+PASSED                                                                   [ 16%]
+tests/test_main.py::test_invalid_event 
+-------------------------------- live log call ---------------------------------
+INFO     aiohttp.access:web_log.py:229 127.0.0.1 [24/Oct/2026:17:09:33 +0000] "POST /api/events HTTP/1.1" 400 230 "-" "Python/3.11 aiohttp/3.14.4"
+INFO     aiohttp.access:web_log.py:229 127.0.0.1 [24/Oct/2026:17:09:33 +0000] "POST /api/events HTTP/1.1" 400 238 "-" "Python/3.11 aiohttp/3.14.4"
+INFO     aiohttp.access:web_log.py:229 127.0.0.1 [24/Oct/2026:17:09:33 +0000] "POST /api/events HTTP/1.1" 400 218 "-" "Python/3.11 aiohttp/3.14.4"
+INFO     aiohttp.access:web_log.py:229 127.0.0.1 [24/Oct/2026:17:09:33 +0000] "POST /api/events HTTP/1.1" 400 207 "-" "Python/3.11 aiohttp/3.14.4"
+PASSED                                                                   [ 33%]
+tests/test_main.py::test_metrics 
+-------------------------------- live log call ---------------------------------
+INFO     aiohttp.access:web_log.py:229 127.0.0.1 [24/Oct/2026:17:09:33 +0000] "POST /api/events HTTP/1.1" 201 172 "-" "Python/3.11 aiohttp/3.14.4"
+INFO     aiohttp.access:web_log.py:229 127.0.0.1 [24/Oct/2026:17:09:33 +0000] "GET /metrics HTTP/1.1" 200 6159 "-" "Python/3.11 aiohttp/3.14.4"
+PASSED                                                                   [ 50%]
+tests/test_main.py::test_reload_reconnects_with_new_password 
+-------------------------------- live log call ---------------------------------
+INFO     audit_svc.main:main.py:162 config reloaded, database settings are unchanged
+INFO     aiohttp.access:web_log.py:229 127.0.0.1 [24/Oct/2026:17:09:33 +0000] "POST /reload HTTP/1.1" 200 199 "-" "Python/3.11 aiohttp/3.14.4"
+INFO     audit_svc.main:main.py:178 config reloaded, reconnected to the database
+INFO     aiohttp.access:web_log.py:229 127.0.0.1 [24/Oct/2026:17:09:33 +0000] "POST /reload HTTP/1.1" 200 198 "-" "Python/3.11 aiohttp/3.14.4"
+PASSED                                                                   [ 66%]
+tests/test_main.py::test_reload_keeps_old_connection_on_failure 
+-------------------------------- live log call ---------------------------------
+ERROR    audit_svc.main:main.py:170 config reload failed, keeping previous connection: connection refused
+INFO     aiohttp.access:web_log.py:229 127.0.0.1 [24/Oct/2026:17:09:33 +0000] "POST /reload HTTP/1.1" 503 241 "-" "Python/3.11 aiohttp/3.14.4"
+INFO     aiohttp.access:web_log.py:229 127.0.0.1 [24/Oct/2026:17:09:33 +0000] "POST /api/events HTTP/1.1" 201 172 "-" "Python/3.11 aiohttp/3.14.4"
+PASSED                                                                   [ 83%]
+tests/test_main.py::test_database_down 
+-------------------------------- live log call ---------------------------------
+WARNING  audit_svc.main:main.py:57 database is unavailable, will retry on next request: connection refused
+ERROR    audit_svc.main:main.py:78 database error: connection refused
+INFO     aiohttp.access:web_log.py:229 127.0.0.1 [24/Oct/2026:17:09:33 +0000] "GET /healthz HTTP/1.1" 503 212 "-" "Python/3.11 aiohttp/3.14.4"
+ERROR    audit_svc.main:main.py:78 database error: connection refused
+INFO     aiohttp.access:web_log.py:229 127.0.0.1 [24/Oct/2026:17:09:33 +0000] "POST /api/events HTTP/1.1" 503 212 "-" "Python/3.11 aiohttp/3.14.4"
+PASSED                                                                   [100%]
+
+- generated xml file: /home/runner/work/DevOps-2/DevOps-2/FINAL_HW/test-results.xml -
+============================== 6 passed in 0.06s ===============================
+##[group]Run actions/upload-artifact@v4
+with:
+  name: junit
+  path: FINAL_HW/test-results.xml
+  if-no-files-found: warn
+  compression-level: 6
+  overwrite: false
+  include-hidden-files: false
+env:
+  pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+##[endgroup]
+(node:2737) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+With the provided path, there will be 1 file uploaded
+Artifact name is valid!
+Root directory input is valid!
+Beginning upload of artifact content to blob storage
+(node:2737) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Uploaded bytes 434
+Finished uploading artifact content to blob storage!
+SHA256 digest of uploaded artifact zip is 957d484bf51fd9ebb4d3c80ee5b4e6dc00d00b89ca2d8c207a5a4f4365a698d0
+Finalizing artifact upload
+Artifact junit.zip successfully finalized. Artifact ID 12567728884
+Artifact junit has been successfully uploaded! Final size is 434 bytes. Artifact ID is 12567728884
+Artifact download URL: https://github.com/Summit67/DevOps-2/actions/runs/40114816546/artifacts/12567728884
+Post job cleanup.
+(node:2749) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.55.0
+Temporarily overriding HOME='/home/runner/work/_temp/2f5c7550-2fd8-4f7a-b31c-45c93cb61059' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/DevOps-2/DevOps-2
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Cleaning up orphan processes
+##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

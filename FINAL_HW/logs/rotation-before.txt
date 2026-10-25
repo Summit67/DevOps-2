@@ -1,0 +1,9 @@
+StartedAt
+2026-10-24T17:12:09.291411182Z
+Image ID
+sha256:00840de2f74ebad6e08596c69934353aa0ae242413ed1b08b6e127a920a2c371
+Reload counter
+audit_config_reloads_total{result="success"} 1.0
+Health
+{"status": "ok"}
+HTTP 200

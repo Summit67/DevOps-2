@@ -57,3 +57,7 @@ curl -s http://127.0.0.1:9187/metrics | grep '^pg_up '
 ## HW4
 
 [Counter в Kubernetes: манифесты, Helm-чарт и отчёт](HW4/README.md)
+
+## FINAL_HW
+
+[audit-svc: CI/CD, Ansible, PostgreSQL и мониторинг](FINAL_HW/README.md) · [Отчёт](FINAL_HW/REPORT.md)

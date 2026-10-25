@@ -1,0 +1,15 @@
+StartedAt
+2026-10-24T17:12:09.291411182Z
+Image ID
+sha256:00840de2f74ebad6e08596c69934353aa0ae242413ed1b08b6e127a920a2c371
+Reload counter
+audit_config_reloads_total{result="success"} 2.0
+Health
+{"status": "ok"}
+HTTP 200
+Reload log
+2026-10-24 17:12:12,926 [INFO] audit_svc.main: config reloaded, database settings are unchanged
+2026-10-24 17:15:52,472 [INFO] audit_svc.main: config reloaded, reconnected to the database
+Release image IDs
+[ghcr.io/summit67/audit-svc:v1.0.0 ghcr.io/summit67/audit-svc:v1.0.1] sha256:00840de2f74ebad6e08596c69934353aa0ae242413ed1b08b6e127a920a2c371
+[ghcr.io/summit67/audit-svc:v1.0.0 ghcr.io/summit67/audit-svc:v1.0.1] sha256:00840de2f74ebad6e08596c69934353aa0ae242413ed1b08b6e127a920a2c371

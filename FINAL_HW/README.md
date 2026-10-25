@@ -16,7 +16,8 @@ PostgreSQL и приложение находятся в закрытой сет
 
 Повторный запуск на ВМ из каталога deploy (ключ Vault передаётся окружением):
 ```
-ansible-playbook audit-svc.play.yml --vault-password-file ./vault-pass.sh -e audit_image_tag=v1.0.0
+chmod +x vault-pass.sh
+ansible-playbook audit-svc.play.yml --vault-password-file ./vault-pass.sh -e audit_image_tag=v1.0.2
 ```
 
 Мониторинг:
@@ -26,3 +27,6 @@ docker compose up -d
 ```
 
 Grafana: 127.0.0.1:13001, Prometheus: 127.0.0.1:19091. Grafana разрешает только просмотр без входа и доступна через loopback.
+
+Для FINAL_HW остановлены кластер HW4 и мониторинг HW3, их данные сохранены.
+JSON Nginx взят из [nginx-prometheus-exporter](https://github.com/nginx/nginx-prometheus-exporter/blob/main/grafana/dashboard.json).
